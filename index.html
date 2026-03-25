@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEGEM Başvuru Bilgi Toplama Formu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #0056b3;
+        }
+        .section {
+            margin-bottom: 30px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 80px;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .checkbox-group label {
+            font-weight: normal;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        button {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #003d80;
+        }
+        .note {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 20px;
+        }
+        .success {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #d4edda;
+            color: #155724;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>SEGEM Başvuru Bilgi Toplama Formu</h1>
+    <p>Lütfen aşağıdaki soruları detaylı şekilde cevaplayınız. Formu doldurduktan sonra "Gönder" butonuna basın; yanıtlar otomatik olarak e-posta ile gönderilecektir.</p>
+
+    <form id="surveyForm" action="https://script.google.com/macros/s/AKfycbz.../exec" method="POST">
+        <!-- 1. PROJE KONSEPTİ -->
+        <div class="section">
+            <h2>1. PROJE KONSEPTİ</h2>
+            <div class="question">
+                <label>1.1. Yazılımın temel işlevi</label>
+                <textarea name="1.1. Yazılımın temel işlevi" rows="3"></textarea>
+            </div>
+            <div class="question">
+                <label>1.2. Hedef sektör(ler)</label>
+                <textarea name="1.2. Hedef sektör(ler)" rows="2"></textarea>
+            </div>
+            <div class="question">
+                <label>1.3. Somut faydalar</label>
+                <textarea name="1.3. Somut faydalar" rows="3"></textarea>
+            </div>
+            <div class="question">
+                <label>1.4. 10 yıllık vizyon ve hedefler</label>
+                <textarea name="1.4. 10 yıllık vizyon ve hedefler" rows="3"></textarea>
+            </div>
+        </div>
+
+        <!-- 2. TEKNİK ALTYAPI -->
+        <div class="section">
+            <h2>2. TEKNİK ALTYAPI</h2>
+            <div class="question">
+                <label>2.1. Geliştirme aşamaları</label>
+                <textarea name="2.1. Geliştirme aşamaları" rows="2"></textarea>
+            </div>
+            <div class="question">
+                <label>2.2. Kullanılacak teknolojiler</label>
+                <textarea name="2.2. Kullanılacak teknolojiler" rows="2"></textarea>
+            </div>
+            <div class="question">
+                <label>2.3. Geliştirme modeli</label>
+                <select name="2.3. Geliştirme modeli">
+                    <option value="">Seçiniz</option>
+                    <option>Kendi ekibimizle geliştireceğiz</option>
+                    <option>Dışarıdan yazılım hizmeti alacağız</option>
+                    <option>Hibrit (kısmen kendi, kısmen dış kaynak)</option>
+                </select>
+            </div>
+            <div class="question">
+                <label>2.4. Mevcut altyapı / prototip</label>
+                <textarea name="2.4. Mevcut altyapı / prototip" rows="2"></textarea>
+            </div>
+        </div>
+
+        <!-- 3. ORGANİZASYON & İNSAN KAYNAKLARI PLANI -->
+        <div class="section">
+            <h2>3. ORGANİZASYON & İNSAN KAYNAKLARI PLANI</h2>
+            <div class="question">
+                <label>3.1. Ortaklık yapısı</label>
+                <textarea name="3.1. Ortaklık yapısı" rows="2"></textarea>
+            </div>
+            <div class="question">
+                <label>3.2. 30 kişilik ekip nitelikleri</label>
+                <textarea name="3.2. 30 kişilik ekip nitelikleri" rows="3"></textarea>
+            </div>
+            <div class="question">
+                <label>3.3. İşe alım planı</label>
+                <textarea name="3.3. İşe alım planı" rows="2"></textarea>
+            </div>
+            <div class="question">
+                <label>3.4. Yönetim kadrosu</label>
+                <textarea name="3.4. Yönetim kadrosu" rows="2"></textarea>
+            </div>
+        </div>
+
+        <!-- 4. FAALİYET BÖLGELERİ -->
+        <div class="section">
+            <h2>4. FAALİYET BÖLGELERİ</h2>
+            <div class="question">
+                <label>4.1. Seçilen 5 İBBS Düzey-1 bölgesi (En az 5 seçin)</label>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="4.1. Bölgeler" value="İstanbul"> İstanbul</label>
+                    <label><input type="checkbox" name="4.1. Bölgeler" value="Batı Marmara"> Batı Marmara</label>
+                    <label><input type="checkbox" name="4.1. Bölgeler" value="Ege"> Ege</label>
+                    <label><input type="checkbox" name="4.1. Bölgeler" value="Doğu Marmara"> Doğu Marmara</label>
+                    <label><input type="checkbox" name="4.1. Bölgeler" value="Batı Anadolu"> Batı Anadolu</label>
+                    <label><input type="checkbox" name="4.1. Bölgeler" value="Akdeniz"> Akdeniz</label>
+                    <label><input type="checkbox" name="4.1. Bölgeler" value="Orta Anadolu"> Orta Anadolu</label>
+                    <label><input type="checkbox" name="4.1. Bölgeler" value="Batı Karadeniz"> Batı Karadeniz</label>
+                    <label><input type="checkbox" name="4.1. Bölgeler" value="Doğu Karadeniz"> Doğu Karadeniz</label>
+                    <label><input type="checkbox" name="4.1. Bölgeler" value="Kuzeydoğu Anadolu"> Kuzeydoğu Anadolu</label>
+                    <label><input type="checkbox" name="4.1. Bölgeler" value="Ortadoğu Anadolu"> Ortadoğu Anadolu</label>
+                    <label><input type="checkbox" name="4.1. Bölgeler" value="Güneydoğu Anadolu"> Güneydoğu Anadolu</label>
+                </div>
+            </div>
+            <div class="question">
+                <label>4.2. Fiziki ofis planı</label>
+                <textarea name="4.2. Fiziki ofis planı" rows="2"></textarea>
+            </div>
+            <div class="question">
+                <label>4.3. Bölgesel sektör odakları</label>
+                <textarea name="4.3. Bölgesel sektör odakları" rows="2"></textarea>
+            </div>
+        </div>
+
+        <!-- 5. İŞ PLANI & FİNANS -->
+        <div class="section">
+            <h2>5. İŞ PLANI & FİNANS</h2>
+            <div class="question">
+                <label>5.1. Yıllık bütçe tahmini</label>
+                <textarea name="5.1. Yıllık bütçe tahmini" rows="3"></textarea>
+            </div>
+            <div class="question">
+                <label>5.2. Gelir modeli</label>
+                <textarea name="5.2. Gelir modeli" rows="2"></textarea>
+            </div>
+            <div class="question">
+                <label>5.3. Yıllık hedef KOBİ sayısı</label>
+                <textarea name="5.3. Yıllık hedef KOBİ sayısı" rows="2"></textarea>
+            </div>
+            <div class="question">
+                <label>5.4. Sürdürülebilirlik planı</label>
+                <textarea name="5.4. Sürdürülebilirlik planı" rows="2"></textarea>
+            </div>
+        </div>
+
+        <!-- 6. KURUMSAL DENEYİM -->
+        <div class="section">
+            <h2>6. KURUMSAL DENEYİM</h2>
+            <div class="question">
+                <label>6.1. Daha önce KOBİ projesi yürütüldü mü?</label>
+                <select name="6.1. Daha önce KOBİ projesi yürütüldü mü?">
+                    <option value="">Seçiniz</option>
+                    <option>Evet, eğitim/danışmanlık projesi yürüttük</option>
+                    <option>Hayır</option>
+                </select>
+            </div>
+            <div class="question">
+                <label>6.2. İşbirliği imkanları</label>
+                <textarea name="6.2. İşbirliği imkanları" rows="2"></textarea>
+            </div>
+            <div class="question">
+                <label>6.3. Daha önce alınan destekler</label>
+                <textarea name="6.3. Daha önce alınan destekler" rows="2"></textarea>
+            </div>
+        </div>
+
+        <!-- 7. EK MATERYALLER -->
+        <div class="section">
+            <h2>7. EK MATERYALLER (İsteğe Bağlı)</h2>
+            <div class="question">
+                <label>7.1. Yazılım mock-up / ekran görüntüsü (açıklama veya link)</label>
+                <textarea name="7.1. Yazılım mock-up" rows="2"></textarea>
+            </div>
+            <div class="question">
+                <label>7.2. Proje akış şeması (açıklama veya link)</label>
+                <textarea name="7.2. Proje akış şeması" rows="2"></textarea>
+            </div>
+            <div class="question">
+                <label>7.3. Referans projeler (açıklama veya link)</label>
+                <textarea name="7.3. Referans projeler" rows="2"></textarea>
+            </div>
+        </div>
+
+        <button type="submit">Gönder</button>
+        <div class="success" id="successMessage">
+            Form başarıyla gönderildi. Teşekkürler!
+        </div>
+        <div class="note">
+            Not: Formu gönderdiğinizde yanıtlar otomatik olarak e-posta ile iletilecektir.
+        </div>
+    </form>
+</div>
+
+<script>
+    const form = document.getElementById('surveyForm');
+    const successDiv = document.getElementById('successMessage');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Checkbox değerlerini birleştirip tek bir parametreye dönüştürme
+        const checkboxes = document.querySelectorAll('input[name="4.1. Bölgeler"]:checked');
+        let regions = Array.from(checkboxes).map(cb => cb.value).join(', ');
+        // Hidden input ekleyerek gönder
+        let hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = '4.1. Seçilen bölgeler';
+        hiddenInput.value = regions;
+        form.appendChild(hiddenInput);
+
+        // Form verilerini topla ve gönder
+        const formData = new FormData(form);
+        // Checkboxları asıl formdan çıkar (çünkü birden çok aynı isimli alan sorun çıkarabilir)
+        // Bunun yerine yukarıdaki hidden input kullanıyoruz.
+        // FormData'ya ekleme yapmadan önce mevcut checkboxları kaldırmak daha temiz olur.
+        // Ancak basitçe yeni hidden ile göndereceğiz.
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            successDiv.style.display = 'block';
+            form.reset();
+            // Hidden input'u temizle
+            form.removeChild(hiddenInput);
+        })
+        .catch(error => {
+            alert('Gönderim sırasında bir hata oluştu. Lütfen tekrar deneyin.');
+            console.error('Error:', error);
+        });
+    });
+</script>
+</body>
+</html>
