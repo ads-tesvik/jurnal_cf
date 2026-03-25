@@ -10,205 +10,64 @@
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #f0f2f5;
-            color: #1e2a3a;
-            line-height: 1.5;
-        }
-        .header {
-            background: #0a5b8c;
-            padding: 16px 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .logo {
-            font-size: 20px;
-            font-weight: 700;
-            color: white;
-        }
+        body { font-family: 'Inter', sans-serif; background: #f0f2f5; color: #1e2a3a; line-height: 1.5; }
+        .header { background: #0a5b8c; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .logo { font-size: 20px; font-weight: 700; color: white; }
         .logo span { color: #ffc107; }
-        .nav-buttons button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 14px;
-            margin-left: 20px;
-            cursor: pointer;
-            font-weight: 500;
-        }
+        .nav-buttons button { background: none; border: none; color: white; font-size: 14px; margin-left: 20px; cursor: pointer; font-weight: 500; }
         .nav-buttons button:hover { text-decoration: underline; }
-        .container {
-            max-width: 1400px;
-            margin: 30px auto;
-            padding: 0 20px;
-        }
-        .two-column {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            align-items: start;
-        }
-        .form-card, .report-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-            overflow: hidden;
-        }
-        .form-card {
-            padding: 24px;
-        }
-        .report-card {
-            padding: 24px;
-            position: sticky;
-            top: 20px;
-            background: #fef9e6;
-            border-left: 6px solid #ffc107;
-        }
-        .form-section {
-            margin-bottom: 32px;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 20px;
-        }
-        .form-section h3 {
-            color: #0a5b8c;
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            font-weight: 600;
-            display: block;
-            margin-bottom: 6px;
-            font-size: 13px;
-            color: #2d3748;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #cbd5e1;
-            border-radius: 10px;
-            font-size: 14px;
-            font-family: inherit;
-            transition: 0.2s;
-        }
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #0a5b8c;
-            box-shadow: 0 0 0 2px rgba(10,91,140,0.2);
-        }
+        .container { max-width: 1400px; margin: 30px auto; padding: 0 20px; }
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: start; }
+        .form-card, .report-card { background: white; border-radius: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); overflow: hidden; }
+        .form-card { padding: 24px; }
+        .report-card { padding: 24px; position: sticky; top: 20px; background: #fef9e6; border-left: 6px solid #ffc107; }
+        .form-section { margin-bottom: 32px; border-bottom: 1px solid #e2e8f0; padding-bottom: 20px; }
+        .form-section h3 { color: #0a5b8c; font-size: 1.3rem; margin-bottom: 20px; font-weight: 600; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .form-group { margin-bottom: 15px; }
+        label { font-weight: 600; display: block; margin-bottom: 6px; font-size: 13px; color: #2d3748; }
+        input, select, textarea { width: 100%; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 14px; font-family: inherit; transition: 0.2s; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #0a5b8c; box-shadow: 0 0 0 2px rgba(10,91,140,0.2); }
         textarea { resize: vertical; min-height: 80px; }
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-top: 8px;
-        }
-        .checkbox-group label {
-            font-weight: normal;
-            background: #f1f5f9;
-            padding: 6px 14px;
-            border-radius: 30px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-        }
-        button {
-            background: #0a5b8c;
-            color: white;
-            border: none;
-            padding: 12px 28px;
-            border-radius: 40px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            margin-top: 10px;
-        }
+        .checkbox-group { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+        .checkbox-group label { font-weight: normal; background: #f1f5f9; padding: 6px 14px; border-radius: 30px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; }
+        button { background: #0a5b8c; color: white; border: none; padding: 12px 28px; border-radius: 40px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s; margin-top: 10px; }
         button:hover { background: #08466b; transform: scale(0.98); }
-        .report-box {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
+        .report-box { background: white; border-radius: 16px; padding: 20px; margin-top: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .report-box h4 { color: #0a5b8c; margin-bottom: 15px; }
         .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; margin: 5px 0; }
         .badge-success { background: #d1fae5; color: #065f46; }
         .badge-warning { background: #fef3c7; color: #92400e; }
-        .admin-panel {
-            background: #1e293b;
-            color: white;
-            border-radius: 16px;
-            padding: 20px;
-            margin-top: 30px;
-        }
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            color: #1e2a3a;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-        .admin-table th, .admin-table td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
-        }
+        .admin-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; margin-top: 15px; }
+        .admin-table th, .admin-table td { padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; }
         .admin-table th { background: #f1f5f9; }
         .btn-sm { padding: 4px 10px; font-size: 12px; border-radius: 6px; margin: 2px; background: #3b82f6; color: white; border: none; cursor: pointer; }
         .btn-danger { background: #ef4444; }
         .btn-green { background: #10b981; }
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 1000; }
         .modal.show { display: flex; }
-        .modal-content {
-            background: white;
-            border-radius: 20px;
-            padding: 24px;
-            max-width: 800px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
+        .modal-content { background: white; border-radius: 20px; padding: 24px; max-width: 1100px; width: 90%; max-height: 90vh; overflow-y: auto; }
+        .report-container { background: white; font-family: 'Inter', sans-serif; line-height: 1.5; color: #1e2a3a; }
+        .report-container h1 { font-size: 24px; color: #0a5b8c; text-align: center; margin-bottom: 10px; }
+        .report-container .subtitle { text-align: center; color: #5a6e7c; margin-bottom: 30px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
+        .report-section { margin-bottom: 25px; break-inside: avoid; }
+        .report-section h2 { font-size: 18px; color: #0a5b8c; border-left: 4px solid #ffc107; padding-left: 12px; margin-bottom: 15px; }
+        .report-question { margin-bottom: 12px; }
+        .report-question .q { font-weight: 700; color: #2d3748; margin-bottom: 4px; }
+        .report-question .a { background: #f8fafc; padding: 8px 12px; border-radius: 8px; white-space: pre-wrap; }
+        .footer { text-align: center; padding: 20px; font-size: 12px; color: #5a6e7c; background: #eef2f7; margin-top: 40px; }
+        @media print {
+            body * { visibility: hidden; }
+            .modal-content, .modal-content * { visibility: visible; }
+            .modal-content { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 20px; box-shadow: none; }
+            .report-container { margin: 0; }
+            .btn-sm, .modal-close { display: none; }
         }
-        .detail-table { width: 100%; border-collapse: collapse; }
-        .detail-table th, .detail-table td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; }
-        .detail-table th { background: #f1f5f9; width: 30%; }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 12px;
-            color: #5a6e7c;
-            background: #eef2f7;
-            margin-top: 40px;
-        }
-        @media (max-width: 900px) {
-            .two-column { grid-template-columns: 1fr; }
-            .form-row { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 900px) { .two-column { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } }
+        .login-screen { background: white; border-radius: 20px; padding: 30px; max-width: 400px; margin: 50px auto; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+        .login-screen input { margin-bottom: 15px; }
+        .error-msg { color: #dc2626; font-size: 12px; margin-top: 5px; display: none; }
+        .checkbox-col { width: 30px; text-align: center; }
     </style>
 </head>
 <body>
@@ -224,7 +83,6 @@
     <!-- İKİ SÜTUNLU ANA FORM -->
     <div id="mainView">
         <div class="two-column">
-            <!-- SOL: FORM -->
             <div class="form-card">
                 <h2 style="color:#0a5b8c; margin-bottom: 8px;">🏢 SEGEM AI Analiz Formu</h2>
                 <p style="margin-bottom: 24px; color: #5a6e7c;">KOSGEB SEGEM kapsamında AI destekli yazılım başvurunuz için gerekli tüm bilgileri detaylıca girin.</p>
@@ -292,9 +150,9 @@
                                 <label><input type="checkbox" value="Ortadoğu Anadolu"> Ortadoğu Anadolu</label>
                                 <label><input type="checkbox" value="Güneydoğu Anadolu"> Güneydoğu Anadolu</label>
                             </div>
-                            <div class="form-group"><label>4.2. Fiziki ofis planı *</label><textarea name="q4_2" rows="2" required placeholder="Her bölgede fiziki ofis kurulacak mı, yoksa mobil/dijital hizmet mi?"></textarea></div>
-                            <div class="form-group"><label>4.3. Bölgesel sektör odakları *</label><textarea name="q4_3" rows="2" required placeholder="Örn: İstanbul – tekstil ve finans, Ege – makine ve tarım"></textarea></div>
                         </div>
+                        <div class="form-group"><label>4.2. Fiziki ofis planı *</label><textarea name="q4_2" rows="2" required placeholder="Her bölgede fiziki ofis kurulacak mı, yoksa mobil/dijital hizmet mi?"></textarea></div>
+                        <div class="form-group"><label>4.3. Bölgesel sektör odakları *</label><textarea name="q4_3" rows="2" required placeholder="Örn: İstanbul – tekstil ve finans, Ege – makine ve tarım"></textarea></div>
                     </div>
 
                     <!-- 6. İŞ PLANI & FİNANS (5.1 - 5.4) -->
@@ -326,7 +184,6 @@
                 </form>
             </div>
 
-            <!-- SAĞ: RAPOR -->
             <div class="report-card">
                 <h3>📊 Ön Analiz Raporu</h3>
                 <div id="reportArea" class="report-box">
@@ -336,16 +193,27 @@
         </div>
     </div>
 
-    <!-- ADMIN PANELİ (Başlangıçta gizli) -->
+    <!-- ADMIN PANELİ (Başlangıçta gizli, login gerektirir) -->
     <div id="adminView" style="display: none;">
-        <div class="form-card" style="margin-top: 0;">
-            <h2 style="color:#0a5b8c;">🔐 Yönetici Paneli</h2>
-            <div style="margin-bottom: 20px;">
-                <button class="btn-sm btn-green" id="exportAllExcel">📊 Tüm Başvuruları Excel İndir</button>
-                <button class="btn-sm btn-green" id="exportAllWord">📄 Tüm Başvuruları Word İndir</button>
-                <button class="btn-sm btn-danger" id="clearAllBtn">🗑️ Tümünü Sil</button>
+        <div id="adminLoginScreen" class="login-screen">
+            <h3>Yönetici Girişi</h3>
+            <input type="email" id="adminEmail" placeholder="E-posta" value="ersinsunbul@gmail.com">
+            <input type="password" id="adminPassword" placeholder="Şifre">
+            <div id="loginError" class="error-msg">Hatalı giriş bilgileri</div>
+            <button id="adminLoginBtn">Giriş Yap</button>
+        </div>
+        <div id="adminPanelContent" style="display: none;">
+            <div class="form-card" style="margin-top: 0;">
+                <h2 style="color:#0a5b8c;">🔐 Yönetici Paneli</h2>
+                <div style="margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn-sm btn-danger" id="deleteSelectedBtn">🗑️ Seçilenleri Sil</button>
+                    <button class="btn-sm btn-green" id="exportSelectedExcel">📊 Seçilenleri Excel İndir</button>
+                    <button class="btn-sm btn-green" id="exportSelectedWord">📄 Seçilenleri Word İndir</button>
+                    <button class="btn-sm" id="selectAllBtn">✅ Tümünü Seç</button>
+                    <button class="btn-sm" id="deselectAllBtn">❌ Seçimi Kaldır</button>
+                </div>
+                <div id="crmList"></div>
             </div>
-            <div id="crmList"></div>
         </div>
     </div>
 </div>
@@ -358,14 +226,17 @@
 <div id="detailModal" class="modal">
     <div class="modal-content">
         <span style="float:right; cursor:pointer; font-size:24px;" onclick="closeDetailModal()">&times;</span>
-        <h3 id="modalTitle">Başvuru Detayı</h3>
         <div id="modalBody"></div>
-        <div style="margin-top:20px;"><button class="btn-sm" id="exportSingleExcel">📊 Excel İndir</button><button class="btn-sm" id="printSingle">🖨️ Yazdır</button></div>
+        <div style="margin-top:20px; text-align:center;">
+            <button class="btn-sm" id="printReportBtn">🖨️ Yazdır / PDF</button>
+            <button class="btn-sm btn-green" id="exportReportWord">📄 Word Olarak İndir</button>
+            <button class="btn-sm btn-green" id="exportReportExcel">📊 Excel Olarak İndir (Anahtar-Değer)</button>
+        </div>
     </div>
 </div>
 
 <script>
-    // ========== EMAILJS AYARLARI (KENDİ BİLGİLERİNİZLE DEĞİŞTİRİN) ==========
+    // ========== EMAILJS AYARLARI ==========
     const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
     const EMAILJS_SERVICE_ID = 'service_mb0wxgc';
     const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
@@ -376,11 +247,14 @@
     function getSubmissions() { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
     function saveSubmissions(subs) { localStorage.setItem(STORAGE_KEY, JSON.stringify(subs)); }
 
-    // Form submit
+    // Admin giriş bilgileri
+    const ADMIN_EMAIL = 'ersinsunbul@gmail.com';
+    const ADMIN_PASSWORD = 'ads2026admin';
+
+    // Form gönderimi (Ana form)
     document.getElementById('submitBtn').addEventListener('click', async function() {
         const form = document.getElementById('segemForm');
         const formData = new FormData(form);
-        // Bölge kontrolü
         const selectedRegions = Array.from(document.querySelectorAll('#regionGroup input:checked')).map(cb => cb.value);
         if (selectedRegions.length < 5) {
             alert('Lütfen en az 5 bölge seçiniz.');
@@ -388,7 +262,6 @@
         }
         formData.append('4.1. Seçilen bölgeler', selectedRegions.join(', '));
 
-        // Kişisel bilgiler kontrol
         const adSoyad = formData.get('adSoyad');
         const email = formData.get('email');
         const telefon = formData.get('telefon');
@@ -397,24 +270,18 @@
             return;
         }
 
-        // Excel verisi
+        // Excel oluştur (basit anahtar-değer)
         const excelData = [];
-        for (let [key, value] of formData.entries()) {
-            excelData.push([key, value]);
-        }
+        for (let [key, value] of formData.entries()) excelData.push([key, value]);
         const ws = XLSX.utils.aoa_to_sheet(excelData);
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'SEGEM_Basvuru');
         const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
         const file = new File([excelBuffer], `SEGEM_Basvuru_${new Date().toISOString()}.xlsx`, { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
-        // E-posta gövdesi
         let emailBody = 'Yeni SEGEM başvurusu alındı.\n\n';
-        for (let [key, value] of formData.entries()) {
-            emailBody += `${key}: ${value}\n`;
-        }
+        for (let [key, value] of formData.entries()) emailBody += `${key}: ${value}\n`;
 
-        // EmailJS gönder
         try {
             await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
                 to_email: 'ersinsunbul@gmail.com',
@@ -441,8 +308,6 @@
 
         // Rapor oluştur
         generateReport(formData);
-
-        // Formu temizle
         form.reset();
         document.querySelectorAll('#regionGroup input').forEach(cb => cb.checked = false);
         alert('Form başarıyla gönderildi. Rapor sağ tarafta oluşturuldu.');
@@ -463,61 +328,218 @@
         document.getElementById('reportArea').innerHTML = report;
     }
 
-    // ADMIN PANELİ
+    // ========== FORMATLI RAPOR (Tüm soru-cevapları düzenli şekilde) ==========
+    function buildFormattedReport(sub) {
+        const c = sub.tumCevaplar;
+        const regionNames = [
+            'İstanbul', 'Batı Marmara', 'Ege', 'Doğu Marmara', 'Batı Anadolu', 'Akdeniz',
+            'Orta Anadolu', 'Batı Karadeniz', 'Doğu Karadeniz', 'Kuzeydoğu Anadolu',
+            'Ortadoğu Anadolu', 'Güneydoğu Anadolu'
+        ];
+        let regions = [];
+        if (c['4.1. Seçilen bölgeler']) {
+            if (typeof c['4.1. Seçilen bölgeler'] === 'string') {
+                regions = c['4.1. Seçilen bölgeler'].split(',').map(s=>s.trim());
+            } else if (Array.isArray(c['4.1. Seçilen bölgeler'])) {
+                regions = c['4.1. Seçilen bölgeler'];
+            }
+        }
+
+        let html = `<div class="report-container" style="max-width: 1100px; margin:0 auto; padding:20px;">`;
+        html += `<h1>SEGEM Başvuru Bilgi Toplama Formu</h1>`;
+        html += `<div class="subtitle">Başvuru Tarihi: ${sub.tarih} | Başvuru ID: ${sub.id}</div>`;
+
+        // 1. Kişisel Bilgiler
+        html += `<div class="report-section"><h2>1. Kişisel ve Firma Bilgileri</h2>`;
+        html += `<div class="report-question"><div class="q">Ad Soyad</div><div class="a">${c.adSoyad || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Telefon</div><div class="a">${c.telefon || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">E-posta</div><div class="a">${c.email || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Firma Ünvanı</div><div class="a">${c.firmaUnvan || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Kuruluş Tarihi</div><div class="a">${c.kurulusTarihi || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Çalışan Sayısı</div><div class="a">${c.calisanSayisi || '-'}</div></div></div>`;
+
+        // 2. Proje Konsepti
+        html += `<div class="report-section"><h2>2. Proje Konsepti</h2>`;
+        html += `<div class="report-question"><div class="q">1.1. Yazılımın temel işlevi</div><div class="a">${c.q1_1 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">1.2. Hedef sektör(ler)</div><div class="a">${c.q1_2 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">1.3. Somut faydalar</div><div class="a">${c.q1_3 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">1.4. 10 yıllık vizyon ve hedefler</div><div class="a">${c.q1_4 || '-'}</div></div></div>`;
+
+        // 3. Teknik Altyapı
+        html += `<div class="report-section"><h2>3. Teknik Altyapı</h2>`;
+        html += `<div class="report-question"><div class="q">2.1. Geliştirme aşamaları</div><div class="a">${c.q2_1 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">2.2. Kullanılacak teknolojiler</div><div class="a">${c.q2_2 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">2.3. Geliştirme modeli</div><div class="a">${c.q2_3 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">2.4. Mevcut altyapı / prototip</div><div class="a">${c.q2_4 || '-'}</div></div></div>`;
+
+        // 4. Organizasyon & İnsan Kaynakları Planı
+        html += `<div class="report-section"><h2>4. Organizasyon ve İnsan Kaynakları Planı</h2>`;
+        html += `<div class="report-question"><div class="q">3.1. Ortaklık yapısı</div><div class="a">${c.q3_1 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">3.2. 30 kişilik ekip nitelikleri</div><div class="a">${c.q3_2 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">3.3. İşe alım planı</div><div class="a">${c.q3_3 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">3.4. Yönetim kadrosu</div><div class="a">${c.q3_4 || '-'}</div></div></div>`;
+
+        // 5. Faaliyet Bölgeleri
+        html += `<div class="report-section"><h2>5. Faaliyet Bölgeleri</h2>`;
+        html += `<div class="report-question"><div class="q">4.1. Seçilen bölgeler</div><div class="a">${regions.join(', ')}</div></div>`;
+        html += `<div class="report-question"><div class="q">4.2. Fiziki ofis planı</div><div class="a">${c.q4_2 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">4.3. Bölgesel sektör odakları</div><div class="a">${c.q4_3 || '-'}</div></div></div>`;
+
+        // 6. İş Planı & Finans
+        html += `<div class="report-section"><h2>6. İş Planı ve Finans</h2>`;
+        html += `<div class="report-question"><div class="q">5.1. Yıllık bütçe tahmini</div><div class="a">${c.q5_1 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">5.2. Gelir modeli</div><div class="a">${c.q5_2 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">5.3. Yıllık hedef KOBİ sayısı</div><div class="a">${c.q5_3 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">5.4. Sürdürülebilirlik planı</div><div class="a">${c.q5_4 || '-'}</div></div></div>`;
+
+        // 7. Kurumsal Deneyim
+        html += `<div class="report-section"><h2>7. Kurumsal Deneyim</h2>`;
+        html += `<div class="report-question"><div class="q">6.1. Daha önce KOBİ projesi yürütüldü mü?</div><div class="a">${c.q6_1 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">6.2. İşbirliği imkanları</div><div class="a">${c.q6_2 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">6.3. Daha önce alınan destekler</div><div class="a">${c.q6_3 || '-'}</div></div></div>`;
+
+        // 8. Ek Materyaller
+        html += `<div class="report-section"><h2>8. Ek Materyaller (İsteğe Bağlı)</h2>`;
+        html += `<div class="report-question"><div class="q">7.1. Yazılım mock-up / ekran görüntüsü</div><div class="a">${c.q7_1 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">7.2. Proje akış şeması</div><div class="a">${c.q7_2 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">7.3. Referans projeler</div><div class="a">${c.q7_3 || '-'}</div></div></div>`;
+
+        html += `</div>`;
+        return html;
+    }
+
+    // ========== ADMIN PANELİ İŞLEMLERİ ==========
     function renderCRM() {
         const subs = getSubmissions();
         let html = `<table class="admin-table">
-            <thead><tr><th>ID</th><th>Tarih</th><th>Ad Soyad</th><th>E-posta</th><th>Firma</th><th>İşlem</th> </thead><tbody>`;
+            <thead> <th class="checkbox-col"><input type="checkbox" id="selectAllCheckbox"></th><th>ID</th><th>Tarih</th><th>Ad Soyad</th><th>E-posta</th><th>Firma</th><th>İşlem</th> </thead><tbody>`;
         subs.forEach(s => {
-            html += `<tr>
-                <td>${s.id}</td>
-                <td>${s.tarih}</td>
-                <td>${s.adSoyad || '-'}</td>
-                <td>${s.email || '-'}</td>
-                <td>${s.firma || '-'}</td>
-                <td><button class="btn-sm" onclick="viewDetail(${s.id})">Detay</button> <button class="btn-sm btn-danger" onclick="deleteSubmission(${s.id})">Sil</button></td>
-            </tr>`;
+            html += ` <td class="checkbox-col"><input type="checkbox" class="rowCheckbox" value="${s.id}"></td>
+                 <td>${s.id}</td>
+                 <td>${s.tarih}</td>
+                 <td>${s.adSoyad || '-'}</td>
+                 <td>${s.email || '-'}</td>
+                 <td>${s.firma || '-'}</td>
+                 <td><button class="btn-sm" onclick="viewDetail(${s.id})">Detaylı Rapor</button> <button class="btn-sm btn-danger" onclick="deleteSubmission(${s.id})">Sil</button></td>
+             `;
         });
-        html += `</tbody></table>`;
+        html += `</tbody>}</table>`;
         document.getElementById('crmList').innerHTML = html;
+        // Select all/deselect functionality
+        const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+        if (selectAllCheckbox) {
+            selectAllCheckbox.addEventListener('change', function(e) {
+                document.querySelectorAll('.rowCheckbox').forEach(cb => cb.checked = e.target.checked);
+            });
+        }
+    }
+
+    // Yardımcı: seçili ID'leri al
+    function getSelectedIds() {
+        const checkboxes = document.querySelectorAll('.rowCheckbox:checked');
+        return Array.from(checkboxes).map(cb => parseInt(cb.value));
+    }
+
+    // Seçilenleri sil
+    function deleteSelected() {
+        const selectedIds = getSelectedIds();
+        if (selectedIds.length === 0) {
+            alert('Lütfen silmek için en az bir başvuru seçin.');
+            return;
+        }
+        if (confirm(`${selectedIds.length} başvuruyu silmek istediğinize emin misiniz?`)) {
+            let subs = getSubmissions().filter(s => !selectedIds.includes(s.id));
+            saveSubmissions(subs);
+            renderCRM();
+        }
+    }
+
+    // Seçilenleri Excel (anahtar-değer tablosu) indir
+    function exportSelectedToExcel() {
+        const selectedIds = getSelectedIds();
+        if (selectedIds.length === 0) {
+            alert('Lütfen dışa aktarmak için en az bir başvuru seçin.');
+            return;
+        }
+        const subs = getSubmissions().filter(s => selectedIds.includes(s.id));
+        const wb = XLSX.utils.book_new();
+        subs.forEach(sub => {
+            const data = [];
+            for (let [key, val] of Object.entries(sub.tumCevaplar)) {
+                let valStr = Array.isArray(val) ? val.join(', ') : val;
+                data.push([key, valStr]);
+            }
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            XLSX.utils.book_append_sheet(wb, ws, `Basvuru_${sub.id}`);
+        });
+        XLSX.writeFile(wb, `Secili_SEGEM_Basvurular.xlsx`);
+    }
+
+    // Seçilenleri Word (rapor formatında) indir
+    function exportSelectedToWord() {
+        const selectedIds = getSelectedIds();
+        if (selectedIds.length === 0) {
+            alert('Lütfen dışa aktarmak için en az bir başvuru seçin.');
+            return;
+        }
+        const subs = getSubmissions().filter(s => selectedIds.includes(s.id));
+        let allHtml = `<html><head><meta charset="UTF-8"><title>Seçili SEGEM Başvuruları</title><style>body{font-family:Inter,sans-serif;margin:20px}.report-container{max-width:1100px;margin:0 auto}.report-section{margin-bottom:25px}.report-section h2{color:#0a5b8c;border-left:4px solid #ffc107;padding-left:12px}.report-question{margin-bottom:12px}.q{font-weight:700}.a{background:#f8fafc;padding:8px 12px;border-radius:8px}</style></head><body>`;
+        subs.forEach(sub => {
+            allHtml += buildFormattedReport(sub);
+            allHtml += `<div style="page-break-after: always;"></div>`;
+        });
+        allHtml += `</body></html>`;
+        const blob = new Blob([allHtml], { type: 'application/msword' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `Secili_SEGEM_Raporlar.doc`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+    }
+
+    // Tümünü seç / seçimi kaldır
+    function selectAll() {
+        document.querySelectorAll('.rowCheckbox').forEach(cb => cb.checked = true);
+        const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+        if (selectAllCheckbox) selectAllCheckbox.checked = true;
+    }
+    function deselectAll() {
+        document.querySelectorAll('.rowCheckbox').forEach(cb => cb.checked = false);
+        const selectAllCheckbox = document.getElementById('selectAllCheckbox');
+        if (selectAllCheckbox) selectAllCheckbox.checked = false;
     }
 
     window.viewDetail = function(id) {
         const subs = getSubmissions();
         const sub = subs.find(s => s.id === id);
         if (!sub) return;
-        document.getElementById('modalTitle').innerText = `Başvuru Detayı (ID: ${sub.id})`;
-        let details = `<table class="detail-table">`;
-        for (let [key, val] of Object.entries(sub.tumCevaplar)) {
-            let valStr = Array.isArray(val) ? val.join(', ') : val;
-            details += `<tr><th>${key}</th><td>${valStr}</td></tr>`;
-        }
-        details += `</table>`;
-        document.getElementById('modalBody').innerHTML = details;
+        const reportHtml = buildFormattedReport(sub);
+        document.getElementById('modalBody').innerHTML = reportHtml;
         document.getElementById('detailModal').classList.add('show');
         // butonları bağla
-        const exportBtn = document.getElementById('exportSingleExcel');
-        const newExportBtn = exportBtn.cloneNode(true);
-        exportBtn.parentNode.replaceChild(newExportBtn, exportBtn);
-        newExportBtn.onclick = () => exportSingleToExcel(sub);
-        const printBtn = document.getElementById('printSingle');
-        const newPrintBtn = printBtn.cloneNode(true);
-        printBtn.parentNode.replaceChild(newPrintBtn, printBtn);
-        newPrintBtn.onclick = () => {
-            const w = window.open('', '_blank');
-            w.document.write('<html><head><title>Başvuru Detayı</title><style>body{font-family:Arial;margin:20px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ddd;padding:8px}</style></head><body><h2>Başvuru Detayı (ID: '+sub.id+')</h2>'+details+'</body></html>');
-            w.document.close();
-            w.print();
+        const printBtn = document.getElementById('printReportBtn');
+        const newPrint = printBtn.cloneNode(true);
+        printBtn.parentNode.replaceChild(newPrint, printBtn);
+        newPrint.onclick = () => window.print();
+
+        const wordBtn = document.getElementById('exportReportWord');
+        const newWord = wordBtn.cloneNode(true);
+        wordBtn.parentNode.replaceChild(newWord, wordBtn);
+        newWord.onclick = () => {
+            const blob = new Blob([reportHtml], { type: 'application/msword' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `SEGEM_Rapor_${sub.id}.doc`;
+            link.click();
+            URL.revokeObjectURL(link.href);
         };
+
+        const excelBtn = document.getElementById('exportReportExcel');
+        const newExcel = excelBtn.cloneNode(true);
+        excelBtn.parentNode.replaceChild(newExcel, excelBtn);
+        newExcel.onclick = () => exportSingleToExcel(sub);
     };
-    function closeDetailModal() { document.getElementById('detailModal').classList.remove('show'); }
-    window.deleteSubmission = function(id) {
-        if (confirm('Bu başvuruyu silmek istediğinize emin misiniz?')) {
-            let subs = getSubmissions().filter(s => s.id !== id);
-            saveSubmissions(subs);
-            renderCRM();
-        }
-    };
+
     function exportSingleToExcel(sub) {
         const data = [];
         for (let [key, val] of Object.entries(sub.tumCevaplar)) {
@@ -529,62 +551,52 @@
         XLSX.utils.book_append_sheet(wb, ws, `Basvuru_${sub.id}`);
         XLSX.writeFile(wb, `SEGEM_Basvuru_${sub.id}.xlsx`);
     }
-    function exportAllToExcel() {
-        const subs = getSubmissions();
-        if (subs.length === 0) { alert('Kayıtlı başvuru yok.'); return; }
-        const wb = XLSX.utils.book_new();
-        subs.forEach(sub => {
-            const data = [];
-            for (let [key, val] of Object.entries(sub.tumCevaplar)) {
-                let valStr = Array.isArray(val) ? val.join(', ') : val;
-                data.push([key, valStr]);
-            }
-            const ws = XLSX.utils.aoa_to_sheet(data);
-            XLSX.utils.book_append_sheet(wb, ws, `Basvuru_${sub.id}`);
-        });
-        XLSX.writeFile(wb, `Tum_SEGEM_Basvurular.xlsx`);
-    }
-    function exportAllToWord() {
-        const subs = getSubmissions();
-        if (subs.length === 0) { alert('Kayıtlı başvuru yok.'); return; }
-        let html = `<html><head><meta charset="UTF-8"><title>Tüm SEGEM Başvuruları</title><style>body{font-family:Arial;margin:20px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ddd;padding:8px}</style></head><body><h1>Tüm SEGEM Başvuruları</h1>`;
-        subs.forEach(sub => {
-            html += `<h2>Başvuru ID: ${sub.id} - Tarih: ${sub.tarih}</h2><table>`;
-            for (let [key, val] of Object.entries(sub.tumCevaplar)) {
-                let valStr = Array.isArray(val) ? val.join(', ') : val;
-                html += `<tr><th>${key}</th><td>${valStr}</td></tr>`;
-            }
-            html += `</table><hr>`;
-        });
-        html += `</body></html>`;
-        const blob = new Blob([html], { type: 'application/msword' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = `Tum_SEGEM_Basvurular.doc`;
-        link.click();
-        URL.revokeObjectURL(link.href);
-    }
-    function clearAll() {
-        if (confirm('TÜM BAŞVURULAR SİLİNECEK. Emin misiniz?')) {
-            saveSubmissions([]);
+
+    window.deleteSubmission = function(id) {
+        if (confirm('Bu başvuruyu silmek istediğinize emin misiniz?')) {
+            let subs = getSubmissions().filter(s => s.id !== id);
+            saveSubmissions(subs);
             renderCRM();
         }
-    }
+    };
+
+    // Admin giriş işlemleri
+    document.getElementById('adminLoginBtn').addEventListener('click', () => {
+        const email = document.getElementById('adminEmail').value.trim();
+        const pass = document.getElementById('adminPassword').value.trim();
+        if (email === ADMIN_EMAIL && pass === ADMIN_PASSWORD) {
+            document.getElementById('adminLoginScreen').style.display = 'none';
+            document.getElementById('adminPanelContent').style.display = 'block';
+            renderCRM();
+        } else {
+            document.getElementById('loginError').style.display = 'block';
+        }
+    });
 
     // Admin panel geçişi
     document.getElementById('showFormBtn').addEventListener('click', () => {
         document.getElementById('mainView').style.display = 'block';
         document.getElementById('adminView').style.display = 'none';
+        document.getElementById('adminLoginScreen').style.display = 'block';
+        document.getElementById('adminPanelContent').style.display = 'none';
+        document.getElementById('loginError').style.display = 'none';
     });
     document.getElementById('showAdminBtn').addEventListener('click', () => {
         document.getElementById('mainView').style.display = 'none';
         document.getElementById('adminView').style.display = 'block';
-        renderCRM();
+        document.getElementById('adminLoginScreen').style.display = 'block';
+        document.getElementById('adminPanelContent').style.display = 'none';
+        document.getElementById('loginError').style.display = 'none';
     });
-    document.getElementById('exportAllExcel').addEventListener('click', exportAllToExcel);
-    document.getElementById('exportAllWord').addEventListener('click', exportAllToWord);
-    document.getElementById('clearAllBtn').addEventListener('click', clearAll);
-    window.closeDetailModal = closeDetailModal;
+
+    // Buton eventleri
+    document.getElementById('deleteSelectedBtn').addEventListener('click', deleteSelected);
+    document.getElementById('exportSelectedExcel').addEventListener('click', exportSelectedToExcel);
+    document.getElementById('exportSelectedWord').addEventListener('click', exportSelectedToWord);
+    document.getElementById('selectAllBtn').addEventListener('click', selectAll);
+    document.getElementById('deselectAllBtn').addEventListener('click', deselectAll);
+
+    window.closeDetailModal = function() { document.getElementById('detailModal').classList.remove('show'); };
 </script>
 </body>
 </html>
