@@ -35,9 +35,6 @@
         button:hover { background: #08466b; transform: scale(0.98); }
         .report-box { background: white; border-radius: 16px; padding: 20px; margin-top: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .report-box h4 { color: #0a5b8c; margin-bottom: 15px; }
-        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; margin: 5px 0; }
-        .badge-success { background: #d1fae5; color: #065f46; }
-        .badge-warning { background: #fef3c7; color: #92400e; }
         .admin-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; margin-top: 15px; }
         .admin-table th, .admin-table td { padding: 10px; text-align: left; border-bottom: 1px solid #e2e8f0; }
         .admin-table th { background: #f1f5f9; }
@@ -68,6 +65,11 @@
         .login-screen input { margin-bottom: 15px; }
         .error-msg { color: #dc2626; font-size: 12px; margin-top: 5px; display: none; }
         .checkbox-col { width: 30px; text-align: center; }
+        .settings-form { max-width: 400px; margin: 20px 0; padding: 15px; background: #f9fafb; border-radius: 12px; }
+        .settings-form h4 { margin-bottom: 15px; color: #0a5b8c; }
+        .settings-form .form-group { margin-bottom: 12px; }
+        .settings-form button { margin-top: 5px; padding: 8px 16px; font-size: 14px; }
+        .success-msg { color: #10b981; font-size: 12px; margin-top: 5px; display: none; }
     </style>
 </head>
 <body>
@@ -80,7 +82,7 @@
 </div>
 
 <div class="container">
-    <!-- İKİ SÜTUNLU ANA FORM -->
+    <!-- ANA FORM -->
     <div id="mainView">
         <div class="two-column">
             <div class="form-card">
@@ -193,11 +195,11 @@
         </div>
     </div>
 
-    <!-- ADMIN PANELİ (Başlangıçta gizli, login gerektirir) -->
+    <!-- ADMIN PANELİ -->
     <div id="adminView" style="display: none;">
         <div id="adminLoginScreen" class="login-screen">
             <h3>Yönetici Girişi</h3>
-            <input type="email" id="adminEmail" placeholder="E-posta" value="ersinsunbul@gmail.com">
+            <input type="text" id="adminEmail" placeholder="Kullanıcı Adı (E-posta)" value="ersinsunbul@gmail.com">
             <input type="password" id="adminPassword" placeholder="Şifre">
             <div id="loginError" class="error-msg">Hatalı giriş bilgileri</div>
             <button id="adminLoginBtn">Giriş Yap</button>
@@ -207,12 +209,35 @@
                 <h2 style="color:#0a5b8c;">🔐 Yönetici Paneli</h2>
                 <div style="margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
                     <button class="btn-sm btn-danger" id="deleteSelectedBtn">🗑️ Seçilenleri Sil</button>
-                    <button class="btn-sm btn-green" id="exportSelectedExcel">📊 Seçilenleri Excel İndir</button>
                     <button class="btn-sm btn-green" id="exportSelectedWord">📄 Seçilenleri Word İndir</button>
+                    <button class="btn-sm btn-green" id="exportAllWord">📄 Tümünü Word İndir</button>
                     <button class="btn-sm" id="selectAllBtn">✅ Tümünü Seç</button>
                     <button class="btn-sm" id="deselectAllBtn">❌ Seçimi Kaldır</button>
                 </div>
                 <div id="crmList"></div>
+                <!-- Ayarlar Bölümü (Kullanıcı Adı ve Şifre Değiştirme) -->
+                <div class="settings-form">
+                    <h4>⚙️ Ayarlar</h4>
+                    <div class="form-group">
+                        <label>Mevcut Şifre</label>
+                        <input type="password" id="currentPassword" placeholder="Mevcut şifrenizi girin">
+                    </div>
+                    <div class="form-group">
+                        <label>Yeni Kullanıcı Adı (E-posta)</label>
+                        <input type="email" id="newUsername" placeholder="Yeni e-posta adresi">
+                    </div>
+                    <div class="form-group">
+                        <label>Yeni Şifre</label>
+                        <input type="password" id="newPassword" placeholder="Yeni şifre">
+                    </div>
+                    <div class="form-group">
+                        <label>Yeni Şifre (Tekrar)</label>
+                        <input type="password" id="confirmPassword" placeholder="Yeni şifreyi tekrar girin">
+                    </div>
+                    <button class="btn-sm" id="saveSettingsBtn">💾 Değişiklikleri Kaydet</button>
+                    <div id="settingsSuccess" class="success-msg">Ayarlar başarıyla güncellendi. Çıkış yapıp yeni bilgilerle giriş yapın.</div>
+                    <div id="settingsError" class="error-msg" style="margin-top:5px;"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -230,7 +255,6 @@
         <div style="margin-top:20px; text-align:center;">
             <button class="btn-sm" id="printReportBtn">🖨️ Yazdır / PDF</button>
             <button class="btn-sm btn-green" id="exportReportWord">📄 Word Olarak İndir</button>
-            <button class="btn-sm btn-green" id="exportReportExcel">📊 Excel Olarak İndir (Anahtar-Değer)</button>
         </div>
     </div>
 </div>
@@ -244,12 +268,24 @@
 
     // LocalStorage
     const STORAGE_KEY = 'segem_subs';
+    const CONFIG_KEY = 'ads_config';
     function getSubmissions() { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
     function saveSubmissions(subs) { localStorage.setItem(STORAGE_KEY, JSON.stringify(subs)); }
+    function getAdminConfig() {
+        let config = localStorage.getItem(CONFIG_KEY);
+        if (config) return JSON.parse(config);
+        // varsayılan
+        return { email: 'ersinsunbul@gmail.com', password: 'ads2026admin' };
+    }
+    function saveAdminConfig(config) {
+        localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
+    }
 
-    // Admin giriş bilgileri
-    const ADMIN_EMAIL = 'ersinsunbul@gmail.com';
-    const ADMIN_PASSWORD = 'ads2026admin';
+    // Admin giriş kontrolü
+    function checkAdminLogin(email, password) {
+        const config = getAdminConfig();
+        return (email === config.email && password === config.password);
+    }
 
     // Form gönderimi (Ana form)
     document.getElementById('submitBtn').addEventListener('click', async function() {
@@ -270,7 +306,7 @@
             return;
         }
 
-        // Excel oluştur (basit anahtar-değer)
+        // Excel oluştur (sadece e-posta eki için)
         const excelData = [];
         for (let [key, value] of formData.entries()) excelData.push([key, value]);
         const ws = XLSX.utils.aoa_to_sheet(excelData);
@@ -414,18 +450,18 @@
         let html = `<table class="admin-table">
             <thead> <th class="checkbox-col"><input type="checkbox" id="selectAllCheckbox"></th><th>ID</th><th>Tarih</th><th>Ad Soyad</th><th>E-posta</th><th>Firma</th><th>İşlem</th> </thead><tbody>`;
         subs.forEach(s => {
-            html += ` <td class="checkbox-col"><input type="checkbox" class="rowCheckbox" value="${s.id}"></td>
-                 <td>${s.id}</td>
-                 <td>${s.tarih}</td>
-                 <td>${s.adSoyad || '-'}</td>
-                 <td>${s.email || '-'}</td>
-                 <td>${s.firma || '-'}</td>
-                 <td><button class="btn-sm" onclick="viewDetail(${s.id})">Detaylı Rapor</button> <button class="btn-sm btn-danger" onclick="deleteSubmission(${s.id})">Sil</button></td>
-             `;
+            html += ` <td class="checkbox-col"><input type="checkbox" class="rowCheckbox" value="${s.id}">  </td>
+                   <td>${s.id}</td>
+                   <td>${s.tarih}</td>
+                   <td>${s.adSoyad || '-'}</td>
+                   <td>${s.email || '-'}</td>
+                   <td>${s.firma || '-'}</td>
+                   <td><button class="btn-sm" onclick="viewDetail(${s.id})">Detaylı Rapor</button> <button class="btn-sm btn-danger" onclick="deleteSubmission(${s.id})">Sil</button></td>
+                 </tr>`;
         });
-        html += `</tbody>}</table>`;
+        html += `</tbody></table>`;
         document.getElementById('crmList').innerHTML = html;
-        // Select all/deselect functionality
+        // Select all checkbox
         const selectAllCheckbox = document.getElementById('selectAllCheckbox');
         if (selectAllCheckbox) {
             selectAllCheckbox.addEventListener('change', function(e) {
@@ -434,7 +470,7 @@
         }
     }
 
-    // Yardımcı: seçili ID'leri al
+    // Seçili ID'leri al
     function getSelectedIds() {
         const checkboxes = document.querySelectorAll('.rowCheckbox:checked');
         return Array.from(checkboxes).map(cb => parseInt(cb.value));
@@ -454,28 +490,7 @@
         }
     }
 
-    // Seçilenleri Excel (anahtar-değer tablosu) indir
-    function exportSelectedToExcel() {
-        const selectedIds = getSelectedIds();
-        if (selectedIds.length === 0) {
-            alert('Lütfen dışa aktarmak için en az bir başvuru seçin.');
-            return;
-        }
-        const subs = getSubmissions().filter(s => selectedIds.includes(s.id));
-        const wb = XLSX.utils.book_new();
-        subs.forEach(sub => {
-            const data = [];
-            for (let [key, val] of Object.entries(sub.tumCevaplar)) {
-                let valStr = Array.isArray(val) ? val.join(', ') : val;
-                data.push([key, valStr]);
-            }
-            const ws = XLSX.utils.aoa_to_sheet(data);
-            XLSX.utils.book_append_sheet(wb, ws, `Basvuru_${sub.id}`);
-        });
-        XLSX.writeFile(wb, `Secili_SEGEM_Basvurular.xlsx`);
-    }
-
-    // Seçilenleri Word (rapor formatında) indir
+    // Seçilenleri Word olarak indir (rapor formatında)
     function exportSelectedToWord() {
         const selectedIds = getSelectedIds();
         if (selectedIds.length === 0) {
@@ -497,6 +512,27 @@
         URL.revokeObjectURL(link.href);
     }
 
+    // Tümünü Word olarak indir
+    function exportAllToWord() {
+        const subs = getSubmissions();
+        if (subs.length === 0) {
+            alert('Kayıtlı başvuru yok.');
+            return;
+        }
+        let allHtml = `<html><head><meta charset="UTF-8"><title>Tüm SEGEM Başvuruları</title><style>body{font-family:Inter,sans-serif;margin:20px}.report-container{max-width:1100px;margin:0 auto}.report-section{margin-bottom:25px}.report-section h2{color:#0a5b8c;border-left:4px solid #ffc107;padding-left:12px}.report-question{margin-bottom:12px}.q{font-weight:700}.a{background:#f8fafc;padding:8px 12px;border-radius:8px}</style></head><body>`;
+        subs.forEach(sub => {
+            allHtml += buildFormattedReport(sub);
+            allHtml += `<div style="page-break-after: always;"></div>`;
+        });
+        allHtml += `</body></html>`;
+        const blob = new Blob([allHtml], { type: 'application/msword' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `Tum_SEGEM_Raporlar.doc`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+    }
+
     // Tümünü seç / seçimi kaldır
     function selectAll() {
         document.querySelectorAll('.rowCheckbox').forEach(cb => cb.checked = true);
@@ -509,6 +545,7 @@
         if (selectAllCheckbox) selectAllCheckbox.checked = false;
     }
 
+    // Detay modal
     window.viewDetail = function(id) {
         const subs = getSubmissions();
         const sub = subs.find(s => s.id === id);
@@ -533,24 +570,7 @@
             link.click();
             URL.revokeObjectURL(link.href);
         };
-
-        const excelBtn = document.getElementById('exportReportExcel');
-        const newExcel = excelBtn.cloneNode(true);
-        excelBtn.parentNode.replaceChild(newExcel, excelBtn);
-        newExcel.onclick = () => exportSingleToExcel(sub);
     };
-
-    function exportSingleToExcel(sub) {
-        const data = [];
-        for (let [key, val] of Object.entries(sub.tumCevaplar)) {
-            let valStr = Array.isArray(val) ? val.join(', ') : val;
-            data.push([key, valStr]);
-        }
-        const ws = XLSX.utils.aoa_to_sheet(data);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, `Basvuru_${sub.id}`);
-        XLSX.writeFile(wb, `SEGEM_Basvuru_${sub.id}.xlsx`);
-    }
 
     window.deleteSubmission = function(id) {
         if (confirm('Bu başvuruyu silmek istediğinize emin misiniz?')) {
@@ -560,17 +580,57 @@
         }
     };
 
-    // Admin giriş işlemleri
+    // Admin giriş
     document.getElementById('adminLoginBtn').addEventListener('click', () => {
         const email = document.getElementById('adminEmail').value.trim();
         const pass = document.getElementById('adminPassword').value.trim();
-        if (email === ADMIN_EMAIL && pass === ADMIN_PASSWORD) {
+        if (checkAdminLogin(email, pass)) {
             document.getElementById('adminLoginScreen').style.display = 'none';
             document.getElementById('adminPanelContent').style.display = 'block';
             renderCRM();
         } else {
             document.getElementById('loginError').style.display = 'block';
         }
+    });
+
+    // Ayarları kaydet
+    document.getElementById('saveSettingsBtn').addEventListener('click', () => {
+        const currentPass = document.getElementById('currentPassword').value;
+        const config = getAdminConfig();
+        if (currentPass !== config.password) {
+            document.getElementById('settingsError').innerText = 'Mevcut şifre yanlış.';
+            document.getElementById('settingsError').style.display = 'block';
+            document.getElementById('settingsSuccess').style.display = 'none';
+            return;
+        }
+        const newUsername = document.getElementById('newUsername').value.trim();
+        const newPassword = document.getElementById('newPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (!newUsername && !newPassword) {
+            document.getElementById('settingsError').innerText = 'En az bir alanı değiştirin.';
+            document.getElementById('settingsError').style.display = 'block';
+            return;
+        }
+        if (newPassword && newPassword !== confirmPassword) {
+            document.getElementById('settingsError').innerText = 'Yeni şifreler uyuşmuyor.';
+            document.getElementById('settingsError').style.display = 'block';
+            return;
+        }
+        let updated = { ...config };
+        if (newUsername) updated.email = newUsername;
+        if (newPassword) updated.password = newPassword;
+        saveAdminConfig(updated);
+        document.getElementById('settingsError').style.display = 'none';
+        document.getElementById('settingsSuccess').style.display = 'block';
+        // Temizle
+        document.getElementById('currentPassword').value = '';
+        document.getElementById('newUsername').value = '';
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+        setTimeout(() => {
+            document.getElementById('settingsSuccess').style.display = 'none';
+        }, 3000);
     });
 
     // Admin panel geçişi
@@ -591,8 +651,8 @@
 
     // Buton eventleri
     document.getElementById('deleteSelectedBtn').addEventListener('click', deleteSelected);
-    document.getElementById('exportSelectedExcel').addEventListener('click', exportSelectedToExcel);
     document.getElementById('exportSelectedWord').addEventListener('click', exportSelectedToWord);
+    document.getElementById('exportAllWord').addEventListener('click', exportAllToWord);
     document.getElementById('selectAllBtn').addEventListener('click', selectAll);
     document.getElementById('deselectAllBtn').addEventListener('click', deselectAll);
 
