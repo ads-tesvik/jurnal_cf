@@ -3,47 +3,588 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEGEM Başvuru Formu</title>
+    <title>ADS Danışmanlık | SEGEM AI Analiz Formu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #eef2f7;
+            font-family: 'Inter', sans-serif;
+            background: #f0f2f5;
+            color: #1e2a3a;
+            line-height: 1.5;
         }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+        .header {
+            background: #0a5b8c;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        h1 {
-            color: #0a5b8c;
-            text-align: center;
-            margin-bottom: 20px;
+        .logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
         }
-        iframe {
-            width: 100%;
-            height: 100vh;
+        .logo span { color: #ffc107; }
+        .nav-buttons button {
+            background: none;
             border: none;
-            border-radius: 16px;
-            background: white;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            color: white;
+            font-size: 14px;
+            margin-left: 20px;
+            cursor: pointer;
+            font-weight: 500;
         }
+        .nav-buttons button:hover { text-decoration: underline; }
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+        .form-card, .report-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .form-card {
+            padding: 24px;
+        }
+        .report-card {
+            padding: 24px;
+            position: sticky;
+            top: 20px;
+            background: #fef9e6;
+            border-left: 6px solid #ffc107;
+        }
+        .form-section {
+            margin-bottom: 32px;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 20px;
+        }
+        .form-section h3 {
+            color: #0a5b8c;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: #2d3748;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #0a5b8c;
+            box-shadow: 0 0 0 2px rgba(10,91,140,0.2);
+        }
+        textarea { resize: vertical; min-height: 80px; }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .checkbox-group label {
+            font-weight: normal;
+            background: #f1f5f9;
+            padding: 6px 14px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+        button {
+            background: #0a5b8c;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 10px;
+        }
+        button:hover { background: #08466b; transform: scale(0.98); }
+        .report-box {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .report-box h4 { color: #0a5b8c; margin-bottom: 15px; }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; margin: 5px 0; }
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .admin-panel {
+            background: #1e293b;
+            color: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            color: #1e2a3a;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .admin-table th, .admin-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .admin-table th { background: #f1f5f9; }
+        .btn-sm { padding: 4px 10px; font-size: 12px; border-radius: 6px; margin: 2px; background: #3b82f6; color: white; border: none; cursor: pointer; }
+        .btn-danger { background: #ef4444; }
+        .btn-green { background: #10b981; }
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        .modal.show { display: flex; }
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .detail-table { width: 100%; border-collapse: collapse; }
+        .detail-table th, .detail-table td { border: 1px solid #ddd; padding: 8px; text-align: left; vertical-align: top; }
+        .detail-table th { background: #f1f5f9; width: 30%; }
         .footer {
             text-align: center;
-            margin-top: 20px;
-            font-size: 0.85rem;
+            padding: 20px;
+            font-size: 12px;
             color: #5a6e7c;
+            background: #eef2f7;
+            margin-top: 40px;
+        }
+        @media (max-width: 900px) {
+            .two-column { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>📋 SEGEM Başvuru Bilgi Toplama Formu</h1>
-    <iframe src="https://script.google.com/macros/s/AKfycbz.../exec" title="SEGEM Formu"></iframe>
-    <div class="footer">
-        ⚡ Form gönderildikten sonra yanıtlarınız Excel dosyası olarak e-posta ile iletilecektir.
+<div class="header">
+    <div class="logo">ADS <span>|</span> Danışmanlık</div>
+    <div class="nav-buttons">
+        <button id="showFormBtn">Ana Form</button>
+        <button id="showAdminBtn">🔐 Admin</button>
     </div>
 </div>
+
+<div class="container">
+    <!-- İKİ SÜTUNLU ANA FORM -->
+    <div id="mainView">
+        <div class="two-column">
+            <!-- SOL: FORM -->
+            <div class="form-card">
+                <h2 style="color:#0a5b8c; margin-bottom: 8px;">🏢 SEGEM AI Analiz Formu</h2>
+                <p style="margin-bottom: 24px; color: #5a6e7c;">KOSGEB SEGEM kapsamında AI destekli yazılım başvurunuz için gerekli tüm bilgileri detaylıca girin.</p>
+                <form id="segemForm">
+                    <!-- 1. KİŞİSEL BİLGİLER -->
+                    <div class="form-section">
+                        <h3>1. Kişisel ve Firma Bilgileri</h3>
+                        <div class="form-row">
+                            <div class="form-group"><label>Ad Soyad *</label><input type="text" name="adSoyad" required></div>
+                            <div class="form-group"><label>Telefon *</label><input type="tel" name="telefon" required></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label>E-posta *</label><input type="email" name="email" required></div>
+                            <div class="form-group"><label>Firma Ünvanı</label><input type="text" name="firmaUnvan"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Firma Kuruluş Tarihi</label><input type="date" name="kurulusTarihi"></div>
+                            <div class="form-group"><label>Çalışan Sayısı</label><select name="calisanSayisi"><option>0</option><option>1-9</option><option>10-49</option><option>50-249</option><option>250+</option></select></div>
+                        </div>
+                    </div>
+
+                    <!-- 2. PROJE KONSEPTİ (1.1 - 1.4) -->
+                    <div class="form-section">
+                        <h3>2. Proje Konsepti</h3>
+                        <div class="form-group"><label>1.1. Yazılımın temel işlevi *</label><textarea name="q1_1" rows="3" required placeholder="AI yazılımınızın KOBİ’lere sağlayacağı somut hizmetleri açıklayın."></textarea></div>
+                        <div class="form-group"><label>1.2. Hedef sektör(ler) *</label><textarea name="q1_2" rows="2" required placeholder="Tekstil, otomotiv yan sanayi, makine imalat, gıda, savunma tedarikçileri vb."></textarea></div>
+                        <div class="form-group"><label>1.3. Somut faydalar *</label><textarea name="q1_3" rows="3" required placeholder="Verimlilik artışı %, maliyet azalımı, ihracat kapasitesi artışı gibi ölçülebilir faydalar."></textarea></div>
+                        <div class="form-group"><label>1.4. 10 yıllık vizyon ve hedefler *</label><textarea name="q1_4" rows="3" required placeholder="Hedeflenen KOBİ sayısı, yaygınlaşma stratejisi"></textarea></div>
+                    </div>
+
+                    <!-- 3. TEKNİK ALTYAPI (2.1 - 2.4) -->
+                    <div class="form-section">
+                        <h3>3. Teknik Altyapı</h3>
+                        <div class="form-group"><label>2.1. Geliştirme aşamaları *</label><textarea name="q2_1" rows="2" required placeholder="MVP, pilot uygulama, yaygınlaştırma planı"></textarea></div>
+                        <div class="form-group"><label>2.2. Kullanılacak teknolojiler *</label><textarea name="q2_2" rows="2" required placeholder="AI/ML modelleri, bulut platform, mobil/web, veri güvenliği"></textarea></div>
+                        <div class="form-group"><label>2.3. Geliştirme modeli *</label><select name="q2_3" required><option value="">Seçiniz</option><option>Kendi ekibimizle geliştireceğiz</option><option>Dışarıdan yazılım hizmeti alacağız</option><option>Hibrit</option></select></div>
+                        <div class="form-group"><label>2.4. Mevcut altyapı / prototip</label><textarea name="q2_4" rows="2" placeholder="Varsa prototip bilgisi"></textarea></div>
+                    </div>
+
+                    <!-- 4. ORGANİZASYON & İNSAN KAYNAKLARI PLANI (3.1 - 3.4) -->
+                    <div class="form-section">
+                        <h3>4. Organizasyon ve İnsan Kaynakları Planı</h3>
+                        <div class="form-group"><label>3.1. Ortaklık yapısı *</label><textarea name="q3_1" rows="2" required placeholder="Hissedarlar ve pay oranları (henüz kesinleşmediyse 'henüz belirlenmedi' yazın)"></textarea></div>
+                        <div class="form-group"><label>3.2. 30 kişilik ekip nitelikleri *</label><textarea name="q3_2" rows="3" required placeholder="KOBİ Danışmanı sayısı, yazılım mühendisi, eğitmen, proje yöneticisi sayıları"></textarea></div>
+                        <div class="form-group"><label>3.3. İşe alım planı *</label><textarea name="q3_3" rows="2" required placeholder="Personel ne zaman, hangi kaynaklarla alınacak?"></textarea></div>
+                        <div class="form-group"><label>3.4. Yönetim kadrosu *</label><textarea name="q3_4" rows="2" required placeholder="Genel müdür, teknik koordinatör, eğitim koordinatörü belirlendi mi?"></textarea></div>
+                    </div>
+
+                    <!-- 5. FAALİYET BÖLGELERİ (4.1 - 4.3) -->
+                    <div class="form-section">
+                        <h3>5. Faaliyet Bölgeleri</h3>
+                        <div class="form-group">
+                            <label>4.1. Seçilen 5 İBBS Düzey-1 bölgesi (En az 5 seçin) *</label>
+                            <div class="checkbox-group" id="regionGroup">
+                                <label><input type="checkbox" value="İstanbul"> İstanbul</label>
+                                <label><input type="checkbox" value="Batı Marmara"> Batı Marmara</label>
+                                <label><input type="checkbox" value="Ege"> Ege</label>
+                                <label><input type="checkbox" value="Doğu Marmara"> Doğu Marmara</label>
+                                <label><input type="checkbox" value="Batı Anadolu"> Batı Anadolu</label>
+                                <label><input type="checkbox" value="Akdeniz"> Akdeniz</label>
+                                <label><input type="checkbox" value="Orta Anadolu"> Orta Anadolu</label>
+                                <label><input type="checkbox" value="Batı Karadeniz"> Batı Karadeniz</label>
+                                <label><input type="checkbox" value="Doğu Karadeniz"> Doğu Karadeniz</label>
+                                <label><input type="checkbox" value="Kuzeydoğu Anadolu"> Kuzeydoğu Anadolu</label>
+                                <label><input type="checkbox" value="Ortadoğu Anadolu"> Ortadoğu Anadolu</label>
+                                <label><input type="checkbox" value="Güneydoğu Anadolu"> Güneydoğu Anadolu</label>
+                            </div>
+                            <div class="form-group"><label>4.2. Fiziki ofis planı *</label><textarea name="q4_2" rows="2" required placeholder="Her bölgede fiziki ofis kurulacak mı, yoksa mobil/dijital hizmet mi?"></textarea></div>
+                            <div class="form-group"><label>4.3. Bölgesel sektör odakları *</label><textarea name="q4_3" rows="2" required placeholder="Örn: İstanbul – tekstil ve finans, Ege – makine ve tarım"></textarea></div>
+                        </div>
+                    </div>
+
+                    <!-- 6. İŞ PLANI & FİNANS (5.1 - 5.4) -->
+                    <div class="form-section">
+                        <h3>6. İş Planı ve Finans</h3>
+                        <div class="form-group"><label>5.1. Yıllık bütçe tahmini *</label><textarea name="q5_1" rows="3" required placeholder="Personel: ... TL, Yazılım: ... TL, Eğitim: ... TL, Danışmanlık: ... TL, Tanıtım: ... TL"></textarea></div>
+                        <div class="form-group"><label>5.2. Gelir modeli *</label><textarea name="q5_2" rows="2" required placeholder="Ücretsiz (SEGEM desteği ile) veya ücretli danışmanlık, abonelik vb."></textarea></div>
+                        <div class="form-group"><label>5.3. Yıllık hedef KOBİ sayısı *</label><textarea name="q5_3" rows="2" required placeholder="İlk yıl, 5. yıl ve 10. yıl hedefleri"></textarea></div>
+                        <div class="form-group"><label>5.4. Sürdürülebilirlik planı *</label><textarea name="q5_4" rows="2" required placeholder="10 yıllık destek sonrası şirketin finansal sürdürülebilirliği nasıl sağlanacak?"></textarea></div>
+                    </div>
+
+                    <!-- 7. KURUMSAL DENEYİM (6.1 - 6.3) -->
+                    <div class="form-section">
+                        <h3>7. Kurumsal Deneyim</h3>
+                        <div class="form-group"><label>6.1. Daha önce KOBİ projesi yürütüldü mü? *</label><select name="q6_1" required><option value="">Seçiniz</option><option>Evet, eğitim/danışmanlık projesi yürüttük</option><option>Hayır</option></select></div>
+                        <div class="form-group"><label>6.2. İşbirliği imkanları *</label><textarea name="q6_2" rows="2" required placeholder="Üniversite, OSB, sektör derneği, ticaret odası ile işbirliği var mı?"></textarea></div>
+                        <div class="form-group"><label>6.3. Daha önce alınan destekler</label><textarea name="q6_3" rows="2" placeholder="KOSGEB, TÜBİTAK vb. programlardan alınan destekler"></textarea></div>
+                    </div>
+
+                    <!-- 8. EK MATERYALLER (7.1 - 7.3) -->
+                    <div class="form-section">
+                        <h3>8. Ek Materyaller (İsteğe Bağlı)</h3>
+                        <div class="form-group"><label>7.1. Yazılım mock-up / ekran görüntüsü (açıklama veya link)</label><textarea name="q7_1" rows="2"></textarea></div>
+                        <div class="form-group"><label>7.2. Proje akış şeması (açıklama veya link)</label><textarea name="q7_2" rows="2"></textarea></div>
+                        <div class="form-group"><label>7.3. Referans projeler (açıklama veya link)</label><textarea name="q7_3" rows="2"></textarea></div>
+                    </div>
+
+                    <button type="button" id="submitBtn">📩 Gönder ve Analiz Al</button>
+                </form>
+            </div>
+
+            <!-- SAĞ: RAPOR -->
+            <div class="report-card">
+                <h3>📊 Ön Analiz Raporu</h3>
+                <div id="reportArea" class="report-box">
+                    <p>Formu doldurup gönderdiğinizde bu alanda SEGEM başvuru ön analiziniz oluşacaktır.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN PANELİ (Başlangıçta gizli) -->
+    <div id="adminView" style="display: none;">
+        <div class="form-card" style="margin-top: 0;">
+            <h2 style="color:#0a5b8c;">🔐 Yönetici Paneli</h2>
+            <div style="margin-bottom: 20px;">
+                <button class="btn-sm btn-green" id="exportAllExcel">📊 Tüm Başvuruları Excel İndir</button>
+                <button class="btn-sm btn-green" id="exportAllWord">📄 Tüm Başvuruları Word İndir</button>
+                <button class="btn-sm btn-danger" id="clearAllBtn">🗑️ Tümünü Sil</button>
+            </div>
+            <div id="crmList"></div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    © 2026 ADS Danışmanlık | SEGEM AI Analiz Formu | Tüm Hakları Saklıdır.
+</div>
+
+<!-- MODAL (detay) -->
+<div id="detailModal" class="modal">
+    <div class="modal-content">
+        <span style="float:right; cursor:pointer; font-size:24px;" onclick="closeDetailModal()">&times;</span>
+        <h3 id="modalTitle">Başvuru Detayı</h3>
+        <div id="modalBody"></div>
+        <div style="margin-top:20px;"><button class="btn-sm" id="exportSingleExcel">📊 Excel İndir</button><button class="btn-sm" id="printSingle">🖨️ Yazdır</button></div>
+    </div>
+</div>
+
+<script>
+    // ========== EMAILJS AYARLARI (KENDİ BİLGİLERİNİZLE DEĞİŞTİRİN) ==========
+    const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+    const EMAILJS_SERVICE_ID = 'service_mb0wxgc';
+    const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+
+    // LocalStorage
+    const STORAGE_KEY = 'segem_subs';
+    function getSubmissions() { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+    function saveSubmissions(subs) { localStorage.setItem(STORAGE_KEY, JSON.stringify(subs)); }
+
+    // Form submit
+    document.getElementById('submitBtn').addEventListener('click', async function() {
+        const form = document.getElementById('segemForm');
+        const formData = new FormData(form);
+        // Bölge kontrolü
+        const selectedRegions = Array.from(document.querySelectorAll('#regionGroup input:checked')).map(cb => cb.value);
+        if (selectedRegions.length < 5) {
+            alert('Lütfen en az 5 bölge seçiniz.');
+            return;
+        }
+        formData.append('4.1. Seçilen bölgeler', selectedRegions.join(', '));
+
+        // Kişisel bilgiler kontrol
+        const adSoyad = formData.get('adSoyad');
+        const email = formData.get('email');
+        const telefon = formData.get('telefon');
+        if (!adSoyad || !email || !telefon) {
+            alert('Lütfen ad soyad, e-posta ve telefon alanlarını doldurun.');
+            return;
+        }
+
+        // Excel verisi
+        const excelData = [];
+        for (let [key, value] of formData.entries()) {
+            excelData.push([key, value]);
+        }
+        const ws = XLSX.utils.aoa_to_sheet(excelData);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'SEGEM_Basvuru');
+        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+        const file = new File([excelBuffer], `SEGEM_Basvuru_${new Date().toISOString()}.xlsx`, { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+        // E-posta gövdesi
+        let emailBody = 'Yeni SEGEM başvurusu alındı.\n\n';
+        for (let [key, value] of formData.entries()) {
+            emailBody += `${key}: ${value}\n`;
+        }
+
+        // EmailJS gönder
+        try {
+            await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                to_email: 'ersinsunbul@gmail.com',
+                subject: 'SEGEM Başvuru Formu - Yeni Cevap (Excel Eki)',
+                message: emailBody,
+                attachment: file,
+            });
+        } catch(err) { console.error('EmailJS hatası:', err); }
+
+        // LocalStorage'a kaydet
+        const cevaplar = {};
+        for (let [key, value] of formData.entries()) cevaplar[key] = value;
+        const subs = getSubmissions();
+        subs.push({
+            id: Date.now(),
+            tarih: new Date().toLocaleString(),
+            adSoyad: adSoyad,
+            email: email,
+            telefon: telefon,
+            firma: formData.get('firmaUnvan') || '',
+            tumCevaplar: cevaplar
+        });
+        saveSubmissions(subs);
+
+        // Rapor oluştur
+        generateReport(formData);
+
+        // Formu temizle
+        form.reset();
+        document.querySelectorAll('#regionGroup input').forEach(cb => cb.checked = false);
+        alert('Form başarıyla gönderildi. Rapor sağ tarafta oluşturuldu.');
+    });
+
+    function generateReport(formData) {
+        const ad = formData.get('adSoyad') || 'Değerli katılımcı';
+        const bolgeler = formData.get('4.1. Seçilen bölgeler') || '';
+        const ekip = formData.get('q3_2') || '';
+        const butce = formData.get('q5_1') || '';
+        let report = `<h4>📋 ${ad} için SEGEM Ön Analiz Raporu</h4>`;
+        report += `<p><strong>Seçilen bölgeler:</strong> ${bolgeler}</p>`;
+        report += `<p><strong>Ekip planı:</strong> ${ekip.substring(0,150)}...</p>`;
+        report += `<p><strong>Bütçe tahmini:</strong> ${butce}</p>`;
+        report += `<p>KOSGEB SEGEM kapsamında, AI destekli yazılım başvurunuz değerlendirilmiştir. ${bolgeler.split(',').length} farklı bölgede faaliyet planlaması ve 30 kişilik ekip hedefi, programın öngördüğü ölçeğe uygun görünmektedir.</p>`;
+        report += `<p><strong>Öneri:</strong> Yetkilendirilmiş Yükümlü Statüsü (YYS) ve ulusal emisyon ticaret sistemi hazırlıklarına başlanması, AB Yeşil Mutabakatı'na uyum için önemlidir.</p>`;
+        report += `<p><strong>Sonraki Adım:</strong> 30 dakikalık ücretsiz danışmanlık randevusu için size ulaşacağız.</p>`;
+        document.getElementById('reportArea').innerHTML = report;
+    }
+
+    // ADMIN PANELİ
+    function renderCRM() {
+        const subs = getSubmissions();
+        let html = `<table class="admin-table">
+            <thead><tr><th>ID</th><th>Tarih</th><th>Ad Soyad</th><th>E-posta</th><th>Firma</th><th>İşlem</th> </thead><tbody>`;
+        subs.forEach(s => {
+            html += `<tr>
+                <td>${s.id}</td>
+                <td>${s.tarih}</td>
+                <td>${s.adSoyad || '-'}</td>
+                <td>${s.email || '-'}</td>
+                <td>${s.firma || '-'}</td>
+                <td><button class="btn-sm" onclick="viewDetail(${s.id})">Detay</button> <button class="btn-sm btn-danger" onclick="deleteSubmission(${s.id})">Sil</button></td>
+            </tr>`;
+        });
+        html += `</tbody></table>`;
+        document.getElementById('crmList').innerHTML = html;
+    }
+
+    window.viewDetail = function(id) {
+        const subs = getSubmissions();
+        const sub = subs.find(s => s.id === id);
+        if (!sub) return;
+        document.getElementById('modalTitle').innerText = `Başvuru Detayı (ID: ${sub.id})`;
+        let details = `<table class="detail-table">`;
+        for (let [key, val] of Object.entries(sub.tumCevaplar)) {
+            let valStr = Array.isArray(val) ? val.join(', ') : val;
+            details += `<tr><th>${key}</th><td>${valStr}</td></tr>`;
+        }
+        details += `</table>`;
+        document.getElementById('modalBody').innerHTML = details;
+        document.getElementById('detailModal').classList.add('show');
+        // butonları bağla
+        const exportBtn = document.getElementById('exportSingleExcel');
+        const newExportBtn = exportBtn.cloneNode(true);
+        exportBtn.parentNode.replaceChild(newExportBtn, exportBtn);
+        newExportBtn.onclick = () => exportSingleToExcel(sub);
+        const printBtn = document.getElementById('printSingle');
+        const newPrintBtn = printBtn.cloneNode(true);
+        printBtn.parentNode.replaceChild(newPrintBtn, printBtn);
+        newPrintBtn.onclick = () => {
+            const w = window.open('', '_blank');
+            w.document.write('<html><head><title>Başvuru Detayı</title><style>body{font-family:Arial;margin:20px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ddd;padding:8px}</style></head><body><h2>Başvuru Detayı (ID: '+sub.id+')</h2>'+details+'</body></html>');
+            w.document.close();
+            w.print();
+        };
+    };
+    function closeDetailModal() { document.getElementById('detailModal').classList.remove('show'); }
+    window.deleteSubmission = function(id) {
+        if (confirm('Bu başvuruyu silmek istediğinize emin misiniz?')) {
+            let subs = getSubmissions().filter(s => s.id !== id);
+            saveSubmissions(subs);
+            renderCRM();
+        }
+    };
+    function exportSingleToExcel(sub) {
+        const data = [];
+        for (let [key, val] of Object.entries(sub.tumCevaplar)) {
+            let valStr = Array.isArray(val) ? val.join(', ') : val;
+            data.push([key, valStr]);
+        }
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, `Basvuru_${sub.id}`);
+        XLSX.writeFile(wb, `SEGEM_Basvuru_${sub.id}.xlsx`);
+    }
+    function exportAllToExcel() {
+        const subs = getSubmissions();
+        if (subs.length === 0) { alert('Kayıtlı başvuru yok.'); return; }
+        const wb = XLSX.utils.book_new();
+        subs.forEach(sub => {
+            const data = [];
+            for (let [key, val] of Object.entries(sub.tumCevaplar)) {
+                let valStr = Array.isArray(val) ? val.join(', ') : val;
+                data.push([key, valStr]);
+            }
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            XLSX.utils.book_append_sheet(wb, ws, `Basvuru_${sub.id}`);
+        });
+        XLSX.writeFile(wb, `Tum_SEGEM_Basvurular.xlsx`);
+    }
+    function exportAllToWord() {
+        const subs = getSubmissions();
+        if (subs.length === 0) { alert('Kayıtlı başvuru yok.'); return; }
+        let html = `<html><head><meta charset="UTF-8"><title>Tüm SEGEM Başvuruları</title><style>body{font-family:Arial;margin:20px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ddd;padding:8px}</style></head><body><h1>Tüm SEGEM Başvuruları</h1>`;
+        subs.forEach(sub => {
+            html += `<h2>Başvuru ID: ${sub.id} - Tarih: ${sub.tarih}</h2><table>`;
+            for (let [key, val] of Object.entries(sub.tumCevaplar)) {
+                let valStr = Array.isArray(val) ? val.join(', ') : val;
+                html += `<tr><th>${key}</th><td>${valStr}</td></tr>`;
+            }
+            html += `</table><hr>`;
+        });
+        html += `</body></html>`;
+        const blob = new Blob([html], { type: 'application/msword' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `Tum_SEGEM_Basvurular.doc`;
+        link.click();
+        URL.revokeObjectURL(link.href);
+    }
+    function clearAll() {
+        if (confirm('TÜM BAŞVURULAR SİLİNECEK. Emin misiniz?')) {
+            saveSubmissions([]);
+            renderCRM();
+        }
+    }
+
+    // Admin panel geçişi
+    document.getElementById('showFormBtn').addEventListener('click', () => {
+        document.getElementById('mainView').style.display = 'block';
+        document.getElementById('adminView').style.display = 'none';
+    });
+    document.getElementById('showAdminBtn').addEventListener('click', () => {
+        document.getElementById('mainView').style.display = 'none';
+        document.getElementById('adminView').style.display = 'block';
+        renderCRM();
+    });
+    document.getElementById('exportAllExcel').addEventListener('click', exportAllToExcel);
+    document.getElementById('exportAllWord').addEventListener('click', exportAllToWord);
+    document.getElementById('clearAllBtn').addEventListener('click', clearAll);
+    window.closeDetailModal = closeDetailModal;
+</script>
 </body>
 </html>
