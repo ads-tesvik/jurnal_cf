@@ -89,7 +89,7 @@
                 <h2 style="color:#0a5b8c; margin-bottom: 8px;">🏢 SEGEM AI Analiz Formu</h2>
                 <p style="margin-bottom: 24px; color: #5a6e7c;">KOSGEB SEGEM kapsamında AI destekli yazılım başvurunuz için gerekli tüm bilgileri detaylıca girin.</p>
                 <form id="segemForm">
-                    <!-- 1. KİŞİSEL BİLGİLER -->
+                    <!-- 1. KİŞİSEL VE FİRMA BİLGİLERİ -->
                     <div class="form-section">
                         <h3>1. Kişisel ve Firma Bilgileri</h3>
                         <div class="form-row">
@@ -104,38 +104,113 @@
                             <div class="form-group"><label>Firma Kuruluş Tarihi</label><input type="date" name="kurulusTarihi"></div>
                             <div class="form-group"><label>Çalışan Sayısı</label><select name="calisanSayisi"><option>0</option><option>1-9</option><option>10-49</option><option>50-249</option><option>250+</option></select></div>
                         </div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Vergi Dairesi / No</label><input type="text" name="vergiDairesiNo"></div>
+                            <div class="form-group"><label>MERSİS No</label><input type="text" name="mersisNo"></div>
+                        </div>
+                        <div class="form-group"><label>Web Sitesi</label><input type="text" name="webSitesi"></div>
+                        <div class="form-group"><label>Ar-Ge Altyapısı (varsa ekipman, yazılım, laboratuvar)</label><textarea name="argeAltyapi" rows="2" placeholder="Mevcut makine/teçhizat, yazılımlar, laboratuvar ortamı"></textarea></div>
                     </div>
 
-                    <!-- 2. PROJE KONSEPTİ (1.1 - 1.4) -->
+                    <!-- 2. PROJE KÜNYESİ -->
                     <div class="form-section">
-                        <h3>2. Proje Konsepti</h3>
+                        <h3>2. Proje Künyesi</h3>
+                        <div class="form-row">
+                            <div class="form-group"><label>Proje Adı *</label><input type="text" name="projeAdi" required></div>
+                            <div class="form-group"><label>Proje Süresi (Ay)</label><input type="number" name="projeSuresiAy"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Toplam Proje Bütçesi (TL)</label><input type="number" name="toplamButceTL"></div>
+                            <div class="form-group"><label>Teknoloji Hazırlık Seviyesi (Başlangıç)</label><select name="thsBaslangic"><option>THS 1</option><option>THS 2</option><option>THS 3</option><option>THS 4</option><option>THS 5</option><option>THS 6</option><option>THS 7</option><option>THS 8</option><option>THS 9</option></select></div>
+                        </div>
+                        <div class="form-group"><label>Teknoloji Hazırlık Seviyesi (Hedef)</label><select name="thsHedef"><option>THS 1</option><option>THS 2</option><option>THS 3</option><option>THS 4</option><option>THS 5</option><option>THS 6</option><option>THS 7</option><option>THS 8</option><option>THS 9</option></select></div>
+                        <div class="form-group"><label>Proje Özeti (kısa açıklama, hedefler, yenilik)</label><textarea name="projeOzeti" rows="3"></textarea></div>
+                    </div>
+
+                    <!-- 3. PROJE KONSEPTİ (eski 1.1 - 1.4) -->
+                    <div class="form-section">
+                        <h3>3. Proje Konsepti</h3>
                         <div class="form-group"><label>1.1. Yazılımın temel işlevi *</label><textarea name="q1_1" rows="3" required placeholder="AI yazılımınızın KOBİ’lere sağlayacağı somut hizmetleri açıklayın."></textarea></div>
                         <div class="form-group"><label>1.2. Hedef sektör(ler) *</label><textarea name="q1_2" rows="2" required placeholder="Tekstil, otomotiv yan sanayi, makine imalat, gıda, savunma tedarikçileri vb."></textarea></div>
                         <div class="form-group"><label>1.3. Somut faydalar *</label><textarea name="q1_3" rows="3" required placeholder="Verimlilik artışı %, maliyet azalımı, ihracat kapasitesi artışı gibi ölçülebilir faydalar."></textarea></div>
                         <div class="form-group"><label>1.4. 10 yıllık vizyon ve hedefler *</label><textarea name="q1_4" rows="3" required placeholder="Hedeflenen KOBİ sayısı, yaygınlaşma stratejisi"></textarea></div>
                     </div>
 
-                    <!-- 3. TEKNİK ALTYAPI (2.1 - 2.4) -->
+                    <!-- 4. TEKNİK DETAYLAR VE YENİLİKÇİ YÖNLER -->
                     <div class="form-section">
-                        <h3>3. Teknik Altyapı</h3>
+                        <h3>4. Teknik Detaylar ve Yenilikçi Yönler</h3>
+                        <div class="form-group"><label>Mevcut Durum ve Teknik Problemler</label><textarea name="mevcutDurumProblemler" rows="3" placeholder="Pazardaki mevcut ürünler, eksiklikler, karşılaşılan sorunlar"></textarea></div>
+                        <div class="form-group"><label>Önerilen Çözüm ve Teknik Yaklaşım</label><textarea name="cozumTeknikYaklasim" rows="4" placeholder="Mekanik, elektronik, yazılım yaklaşımları, kullanılacak yöntemler"></textarea></div>
+                        <div class="form-group"><label>Yenilikçi Yönler (En az 3 yenilik maddesi)</label><textarea name="yenilikciYonler" rows="3" placeholder="Örn: Düşük maliyetli redüktör tasarımı, açık kaynak kontrol yazılımı, sürükle-bırak arayüz"></textarea></div>
+                        <div class="form-group"><label>Patent / Faydalı Model Potansiyeli</label><textarea name="patentPotansiyeli" rows="2" placeholder="Hangi buluşlar için patent/faydalı model başvurusu planlanıyor?"></textarea></div>
+                    </div>
+
+                    <!-- 5. GELİŞTİRME SÜRECİ VE İŞ PLANI (eski 2.1-2.4 genişletildi) -->
+                    <div class="form-section">
+                        <h3>5. Geliştirme Süreci ve İş Planı</h3>
                         <div class="form-group"><label>2.1. Geliştirme aşamaları *</label><textarea name="q2_1" rows="2" required placeholder="MVP, pilot uygulama, yaygınlaştırma planı"></textarea></div>
                         <div class="form-group"><label>2.2. Kullanılacak teknolojiler *</label><textarea name="q2_2" rows="2" required placeholder="AI/ML modelleri, bulut platform, mobil/web, veri güvenliği"></textarea></div>
                         <div class="form-group"><label>2.3. Geliştirme modeli *</label><select name="q2_3" required><option value="">Seçiniz</option><option>Kendi ekibimizle geliştireceğiz</option><option>Dışarıdan yazılım hizmeti alacağız</option><option>Hibrit</option></select></div>
                         <div class="form-group"><label>2.4. Mevcut altyapı / prototip</label><textarea name="q2_4" rows="2" placeholder="Varsa prototip bilgisi"></textarea></div>
+                        <div class="form-group"><label>İş Paketleri ve Zaman Çizelgesi (İş paketi adı, süre, başlangıç/bitiş)</label><textarea name="isPaketleri" rows="4" placeholder="Örn: İP-1 Proje Yönetimi (24 ay), İP-2 Mekanik Tasarım (10 ay) ..."></textarea></div>
                     </div>
 
-                    <!-- 4. ORGANİZASYON & İNSAN KAYNAKLARI PLANI (3.1 - 3.4) -->
+                    <!-- 6. PAZAR ANALİZİ VE TİCARİLEŞME -->
                     <div class="form-section">
-                        <h3>4. Organizasyon ve İnsan Kaynakları Planı</h3>
+                        <h3>6. Pazar Analizi ve Ticarileşme</h3>
+                        <div class="form-group"><label>Hedef Pazar ve Müşteri Segmentleri</label><textarea name="hedefPazar" rows="2" placeholder="Birincil ve ikincil hedef kitle, coğrafi odak"></textarea></div>
+                        <div class="form-group"><label>Pazar Büyüklüğü ve Büyüme Trendleri</label><textarea name="pazarBuyuklugu" rows="2" placeholder="Yıllık pazar büyüklüğü, büyüme oranı, KOBİ potansiyeli"></textarea></div>
+                        <div class="form-group"><label>Rekabet Analizi (Rakipler, güçlü/zayıf yönler, fiyatlandırma)</label><textarea name="rekabetAnalizi" rows="3"></textarea></div>
+                        <div class="form-group"><label>Pazara Giriş Stratejisi ve Satış Hedefleri</label><textarea name="pazaraGiris" rows="3" placeholder="Doğrudan satış, bayilik, eğitim kurumları, fuarlar, dijital pazarlama; ilk 5 yıl hedefleri"></textarea></div>
+                    </div>
+
+                    <!-- 7. FİZİBİLİTE VE EKONOMİK ANALİZ -->
+                    <div class="form-section">
+                        <h3>7. Fizibilite ve Ekonomik Analiz</h3>
+                        <div class="form-group"><label>Birim Maliyet Analizi (Seri üretimde)</label><textarea name="birimMaliyet" rows="3" placeholder="Mekanik parçalar, motorlar, elektronik, montaj, yazılım lisansı, genel giderler (TL)"></textarea></div>
+                        <div class="form-group"><label>Gelir Projeksiyonları (5 yıllık satış, ciro, kar)</label><textarea name="gelirProjeksiyon" rows="3" placeholder="Yıl bazında satış adedi, ciro, birim maliyet, toplam maliyet, kar"></textarea></div>
+                        <div class="form-group"><label>Yatırımın Geri Dönüş Analizi (Geri ödeme süresi, NBD, IRR)</label><textarea name="geriDonusAnalizi" rows="2"></textarea></div>
+                        <div class="form-group"><label>İstihdam Artışı (Proje süresince ve sonrasında)</label><textarea name="istihdamArtisi" rows="2" placeholder="Ar-Ge, üretim, diğer alanlarda personel sayıları"></textarea></div>
+                    </div>
+
+                    <!-- 8. RİSK ANALİZİ -->
+                    <div class="form-section">
+                        <h3>8. Risk Analizi</h3>
+                        <div class="form-group"><label>Teknik Riskler ve Önlemler</label><textarea name="teknikRiskler" rows="2"></textarea></div>
+                        <div class="form-group"><label>Pazar Riskleri ve Önlemler</label><textarea name="pazarRiskler" rows="2"></textarea></div>
+                        <div class="form-group"><label>Finansal Riskler ve Önlemler</label><textarea name="finansalRiskler" rows="2"></textarea></div>
+                    </div>
+
+                    <!-- 9. PROJE BÜTÇESİ (DETAYLI) -->
+                    <div class="form-section">
+                        <h3>9. Proje Bütçesi (TL)</h3>
+                        <div class="form-row">
+                            <div class="form-group"><label>Personel Giderleri</label><input type="number" name="butcePersonel" step="1000"></div>
+                            <div class="form-group"><label>Makine/Teçhizat/Yazılım</label><input type="number" name="butceMakine" step="1000"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Malzeme Giderleri</label><input type="number" name="butceMalzeme" step="1000"></div>
+                            <div class="form-group"><label>Hizmet Alım Giderleri</label><input type="number" name="butceHizmet" step="1000"></div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Seyahat Giderleri</label><input type="number" name="butceSeyahat" step="1000"></div>
+                            <div class="form-group"><label>Genel Giderler</label><input type="number" name="butceGenel" step="1000"></div>
+                        </div>
+                        <div class="form-group"><label>Bütçe Açıklamaları / Nakit Akış Planı</label><textarea name="butceAciklama" rows="2" placeholder="Dönemsel harcama dağılımı, varsa özel kalemler"></textarea></div>
+                    </div>
+
+                    <!-- 10. ORGANİZASYON VE İNSAN KAYNAKLARI (eski 3.1-3.4) -->
+                    <div class="form-section">
+                        <h3>10. Organizasyon ve İnsan Kaynakları Planı</h3>
                         <div class="form-group"><label>3.1. Ortaklık yapısı *</label><textarea name="q3_1" rows="2" required placeholder="Hissedarlar ve pay oranları (henüz kesinleşmediyse 'henüz belirlenmedi' yazın)"></textarea></div>
                         <div class="form-group"><label>3.2. 30 kişilik ekip nitelikleri *</label><textarea name="q3_2" rows="3" required placeholder="KOBİ Danışmanı sayısı, yazılım mühendisi, eğitmen, proje yöneticisi sayıları"></textarea></div>
                         <div class="form-group"><label>3.3. İşe alım planı *</label><textarea name="q3_3" rows="2" required placeholder="Personel ne zaman, hangi kaynaklarla alınacak?"></textarea></div>
                         <div class="form-group"><label>3.4. Yönetim kadrosu *</label><textarea name="q3_4" rows="2" required placeholder="Genel müdür, teknik koordinatör, eğitim koordinatörü belirlendi mi?"></textarea></div>
                     </div>
 
-                    <!-- 5. FAALİYET BÖLGELERİ (4.1 - 4.3) -->
+                    <!-- 11. FAALİYET BÖLGELERİ (4.1-4.3) -->
                     <div class="form-section">
-                        <h3>5. Faaliyet Bölgeleri</h3>
+                        <h3>11. Faaliyet Bölgeleri</h3>
                         <div class="form-group">
                             <label>4.1. Seçilen 5 İBBS Düzey-1 bölgesi (En az 5 seçin) *</label>
                             <div class="checkbox-group" id="regionGroup">
@@ -157,26 +232,26 @@
                         <div class="form-group"><label>4.3. Bölgesel sektör odakları *</label><textarea name="q4_3" rows="2" required placeholder="Örn: İstanbul – tekstil ve finans, Ege – makine ve tarım"></textarea></div>
                     </div>
 
-                    <!-- 6. İŞ PLANI & FİNANS (5.1 - 5.4) -->
+                    <!-- 12. İŞ PLANI & FİNANS (eski 5.1-5.4) -->
                     <div class="form-section">
-                        <h3>6. İş Planı ve Finans</h3>
+                        <h3>12. İş Planı ve Finans</h3>
                         <div class="form-group"><label>5.1. Yıllık bütçe tahmini *</label><textarea name="q5_1" rows="3" required placeholder="Personel: ... TL, Yazılım: ... TL, Eğitim: ... TL, Danışmanlık: ... TL, Tanıtım: ... TL"></textarea></div>
                         <div class="form-group"><label>5.2. Gelir modeli *</label><textarea name="q5_2" rows="2" required placeholder="Ücretsiz (SEGEM desteği ile) veya ücretli danışmanlık, abonelik vb."></textarea></div>
                         <div class="form-group"><label>5.3. Yıllık hedef KOBİ sayısı *</label><textarea name="q5_3" rows="2" required placeholder="İlk yıl, 5. yıl ve 10. yıl hedefleri"></textarea></div>
                         <div class="form-group"><label>5.4. Sürdürülebilirlik planı *</label><textarea name="q5_4" rows="2" required placeholder="10 yıllık destek sonrası şirketin finansal sürdürülebilirliği nasıl sağlanacak?"></textarea></div>
                     </div>
 
-                    <!-- 7. KURUMSAL DENEYİM (6.1 - 6.3) -->
+                    <!-- 13. KURUMSAL DENEYİM (eski 6.1-6.3) -->
                     <div class="form-section">
-                        <h3>7. Kurumsal Deneyim</h3>
+                        <h3>13. Kurumsal Deneyim</h3>
                         <div class="form-group"><label>6.1. Daha önce KOBİ projesi yürütüldü mü? *</label><select name="q6_1" required><option value="">Seçiniz</option><option>Evet, eğitim/danışmanlık projesi yürüttük</option><option>Hayır</option></select></div>
                         <div class="form-group"><label>6.2. İşbirliği imkanları *</label><textarea name="q6_2" rows="2" required placeholder="Üniversite, OSB, sektör derneği, ticaret odası ile işbirliği var mı?"></textarea></div>
                         <div class="form-group"><label>6.3. Daha önce alınan destekler</label><textarea name="q6_3" rows="2" placeholder="KOSGEB, TÜBİTAK vb. programlardan alınan destekler"></textarea></div>
                     </div>
 
-                    <!-- 8. EK MATERYALLER (7.1 - 7.3) -->
+                    <!-- 14. EK MATERYALLER (eski 7.1-7.3) -->
                     <div class="form-section">
-                        <h3>8. Ek Materyaller (İsteğe Bağlı)</h3>
+                        <h3>14. Ek Materyaller (İsteğe Bağlı)</h3>
                         <div class="form-group"><label>7.1. Yazılım mock-up / ekran görüntüsü (açıklama veya link)</label><textarea name="q7_1" rows="2"></textarea></div>
                         <div class="form-group"><label>7.2. Proje akış şeması (açıklama veya link)</label><textarea name="q7_2" rows="2"></textarea></div>
                         <div class="form-group"><label>7.3. Referans projeler (açıklama veya link)</label><textarea name="q7_3" rows="2"></textarea></div>
@@ -195,7 +270,7 @@
         </div>
     </div>
 
-    <!-- ADMIN PANELİ -->
+    <!-- ADMIN PANELİ (Aynı yapı, sadece renderCRM ve rapor üretimi genişletildi) -->
     <div id="adminView" style="display: none;">
         <div id="adminLoginScreen" class="login-screen">
             <h3>Yönetici Girişi</h3>
@@ -260,7 +335,7 @@
 </div>
 
 <script>
-    // ========== EMAILJS AYARLARI ==========
+    // ========== EMAILJS AYARLARI (KENDİ DEĞERLERİNİZLE DEĞİŞTİRİN) ==========
     const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
     const EMAILJS_SERVICE_ID = 'service_mb0wxgc';
     const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
@@ -274,20 +349,16 @@
     function getAdminConfig() {
         let config = localStorage.getItem(CONFIG_KEY);
         if (config) return JSON.parse(config);
-        // varsayılan
         return { email: 'ersinsunbul@gmail.com', password: 'ads2026admin' };
     }
-    function saveAdminConfig(config) {
-        localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
-    }
+    function saveAdminConfig(config) { localStorage.setItem(CONFIG_KEY, JSON.stringify(config)); }
 
-    // Admin giriş kontrolü
     function checkAdminLogin(email, password) {
         const config = getAdminConfig();
         return (email === config.email && password === config.password);
     }
 
-    // Form gönderimi (Ana form)
+    // ========== FORM GÖNDERİMİ ==========
     document.getElementById('submitBtn').addEventListener('click', async function() {
         const form = document.getElementById('segemForm');
         const formData = new FormData(form);
@@ -306,7 +377,7 @@
             return;
         }
 
-        // Excel oluştur (sadece e-posta eki için)
+        // Excel oluştur (e-posta eki için)
         const excelData = [];
         for (let [key, value] of formData.entries()) excelData.push([key, value]);
         const ws = XLSX.utils.aoa_to_sheet(excelData);
@@ -342,7 +413,7 @@
         });
         saveSubmissions(subs);
 
-        // Rapor oluştur
+        // Sağ tarafta ön analiz raporu
         generateReport(formData);
         form.reset();
         document.querySelectorAll('#regionGroup input').forEach(cb => cb.checked = false);
@@ -354,17 +425,21 @@
         const bolgeler = formData.get('4.1. Seçilen bölgeler') || '';
         const ekip = formData.get('q3_2') || '';
         const butce = formData.get('q5_1') || '';
+        const projeAdi = formData.get('projeAdi') || '';
+        const yenilik = formData.get('yenilikciYonler') || '';
         let report = `<h4>📋 ${ad} için SEGEM Ön Analiz Raporu</h4>`;
+        report += `<p><strong>Proje Adı:</strong> ${projeAdi}</p>`;
         report += `<p><strong>Seçilen bölgeler:</strong> ${bolgeler}</p>`;
         report += `<p><strong>Ekip planı:</strong> ${ekip.substring(0,150)}...</p>`;
         report += `<p><strong>Bütçe tahmini:</strong> ${butce}</p>`;
+        report += `<p><strong>Yenilikçi yönler:</strong> ${yenilik.substring(0,200)}...</p>`;
         report += `<p>KOSGEB SEGEM kapsamında, AI destekli yazılım başvurunuz değerlendirilmiştir. ${bolgeler.split(',').length} farklı bölgede faaliyet planlaması ve 30 kişilik ekip hedefi, programın öngördüğü ölçeğe uygun görünmektedir.</p>`;
         report += `<p><strong>Öneri:</strong> Yetkilendirilmiş Yükümlü Statüsü (YYS) ve ulusal emisyon ticaret sistemi hazırlıklarına başlanması, AB Yeşil Mutabakatı'na uyum için önemlidir.</p>`;
         report += `<p><strong>Sonraki Adım:</strong> 30 dakikalık ücretsiz danışmanlık randevusu için size ulaşacağız.</p>`;
         document.getElementById('reportArea').innerHTML = report;
     }
 
-    // ========== FORMATLI RAPOR (Tüm soru-cevapları düzenli şekilde) ==========
+    // ========== TÜM SORULARI İÇEREN FORMATLI RAPOR (buildFormattedReport) ==========
     function buildFormattedReport(sub) {
         const c = sub.tumCevaplar;
         const regionNames = [
@@ -392,76 +467,139 @@
         html += `<div class="report-question"><div class="q">E-posta</div><div class="a">${c.email || '-'}</div></div>`;
         html += `<div class="report-question"><div class="q">Firma Ünvanı</div><div class="a">${c.firmaUnvan || '-'}</div></div>`;
         html += `<div class="report-question"><div class="q">Kuruluş Tarihi</div><div class="a">${c.kurulusTarihi || '-'}</div></div>`;
-        html += `<div class="report-question"><div class="q">Çalışan Sayısı</div><div class="a">${c.calisanSayisi || '-'}</div></div></div>`;
+        html += `<div class="report-question"><div class="q">Çalışan Sayısı</div><div class="a">${c.calisanSayisi || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Vergi Dairesi / No</div><div class="a">${c.vergiDairesiNo || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">MERSİS No</div><div class="a">${c.mersisNo || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Web Sitesi</div><div class="a">${c.webSitesi || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Ar-Ge Altyapısı</div><div class="a">${c.argeAltyapi || '-'}</div></div>`;
+        html += `</div>`;
 
-        // 2. Proje Konsepti
-        html += `<div class="report-section"><h2>2. Proje Konsepti</h2>`;
+        // 2. Proje Künyesi
+        html += `<div class="report-section"><h2>2. Proje Künyesi</h2>`;
+        html += `<div class="report-question"><div class="q">Proje Adı</div><div class="a">${c.projeAdi || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Proje Süresi (Ay)</div><div class="a">${c.projeSuresiAy || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Toplam Bütçe (TL)</div><div class="a">${c.toplamButceTL || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">THS Başlangıç / Hedef</div><div class="a">${c.thsBaslangic || '-'} → ${c.thsHedef || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Proje Özeti</div><div class="a">${c.projeOzeti || '-'}</div></div>`;
+        html += `</div>`;
+
+        // 3. Proje Konsepti
+        html += `<div class="report-section"><h2>3. Proje Konsepti</h2>`;
         html += `<div class="report-question"><div class="q">1.1. Yazılımın temel işlevi</div><div class="a">${c.q1_1 || '-'}</div></div>`;
         html += `<div class="report-question"><div class="q">1.2. Hedef sektör(ler)</div><div class="a">${c.q1_2 || '-'}</div></div>`;
         html += `<div class="report-question"><div class="q">1.3. Somut faydalar</div><div class="a">${c.q1_3 || '-'}</div></div>`;
-        html += `<div class="report-question"><div class="q">1.4. 10 yıllık vizyon ve hedefler</div><div class="a">${c.q1_4 || '-'}</div></div></div>`;
+        html += `<div class="report-question"><div class="q">1.4. 10 yıllık vizyon ve hedefler</div><div class="a">${c.q1_4 || '-'}</div></div>`;
+        html += `</div>`;
 
-        // 3. Teknik Altyapı
-        html += `<div class="report-section"><h2>3. Teknik Altyapı</h2>`;
+        // 4. Teknik Detaylar ve Yenilikçi Yönler
+        html += `<div class="report-section"><h2>4. Teknik Detaylar ve Yenilikçi Yönler</h2>`;
+        html += `<div class="report-question"><div class="q">Mevcut Durum ve Teknik Problemler</div><div class="a">${c.mevcutDurumProblemler || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Önerilen Çözüm ve Teknik Yaklaşım</div><div class="a">${c.cozumTeknikYaklasim || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Yenilikçi Yönler</div><div class="a">${c.yenilikciYonler || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Patent / Faydalı Model Potansiyeli</div><div class="a">${c.patentPotansiyeli || '-'}</div></div>`;
+        html += `</div>`;
+
+        // 5. Geliştirme Süreci ve İş Planı
+        html += `<div class="report-section"><h2>5. Geliştirme Süreci ve İş Planı</h2>`;
         html += `<div class="report-question"><div class="q">2.1. Geliştirme aşamaları</div><div class="a">${c.q2_1 || '-'}</div></div>`;
         html += `<div class="report-question"><div class="q">2.2. Kullanılacak teknolojiler</div><div class="a">${c.q2_2 || '-'}</div></div>`;
         html += `<div class="report-question"><div class="q">2.3. Geliştirme modeli</div><div class="a">${c.q2_3 || '-'}</div></div>`;
-        html += `<div class="report-question"><div class="q">2.4. Mevcut altyapı / prototip</div><div class="a">${c.q2_4 || '-'}</div></div></div>`;
+        html += `<div class="report-question"><div class="q">2.4. Mevcut altyapı / prototip</div><div class="a">${c.q2_4 || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">İş Paketleri ve Zaman Çizelgesi</div><div class="a">${c.isPaketleri || '-'}</div></div>`;
+        html += `</div>`;
 
-        // 4. Organizasyon & İnsan Kaynakları Planı
-        html += `<div class="report-section"><h2>4. Organizasyon ve İnsan Kaynakları Planı</h2>`;
+        // 6. Pazar Analizi ve Ticarileşme
+        html += `<div class="report-section"><h2>6. Pazar Analizi ve Ticarileşme</h2>`;
+        html += `<div class="report-question"><div class="q">Hedef Pazar ve Müşteri Segmentleri</div><div class="a">${c.hedefPazar || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Pazar Büyüklüğü ve Büyüme Trendleri</div><div class="a">${c.pazarBuyuklugu || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Rekabet Analizi</div><div class="a">${c.rekabetAnalizi || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Pazara Giriş Stratejisi ve Satış Hedefleri</div><div class="a">${c.pazaraGiris || '-'}</div></div>`;
+        html += `</div>`;
+
+        // 7. Fizibilite ve Ekonomik Analiz
+        html += `<div class="report-section"><h2>7. Fizibilite ve Ekonomik Analiz</h2>`;
+        html += `<div class="report-question"><div class="q">Birim Maliyet Analizi</div><div class="a">${c.birimMaliyet || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Gelir Projeksiyonları</div><div class="a">${c.gelirProjeksiyon || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Yatırımın Geri Dönüş Analizi</div><div class="a">${c.geriDonusAnalizi || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">İstihdam Artışı</div><div class="a">${c.istihdamArtisi || '-'}</div></div>`;
+        html += `</div>`;
+
+        // 8. Risk Analizi
+        html += `<div class="report-section"><h2>8. Risk Analizi</h2>`;
+        html += `<div class="report-question"><div class="q">Teknik Riskler ve Önlemler</div><div class="a">${c.teknikRiskler || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Pazar Riskleri ve Önlemler</div><div class="a">${c.pazarRiskler || '-'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Finansal Riskler ve Önlemler</div><div class="a">${c.finansalRiskler || '-'}</div></div>`;
+        html += `</div>`;
+
+        // 9. Proje Bütçesi (Detaylı)
+        html += `<div class="report-section"><h2>9. Proje Bütçesi (TL)</h2>`;
+        html += `<div class="report-question"><div class="q">Personel Giderleri</div><div class="a">${c.butcePersonel || '0'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Makine/Teçhizat/Yazılım</div><div class="a">${c.butceMakine || '0'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Malzeme Giderleri</div><div class="a">${c.butceMalzeme || '0'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Hizmet Alım Giderleri</div><div class="a">${c.butceHizmet || '0'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Seyahat Giderleri</div><div class="a">${c.butceSeyahat || '0'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Genel Giderler</div><div class="a">${c.butceGenel || '0'}</div></div>`;
+        html += `<div class="report-question"><div class="q">Bütçe Açıklamaları / Nakit Akış Planı</div><div class="a">${c.butceAciklama || '-'}</div></div>`;
+        html += `</div>`;
+
+        // 10. Organizasyon ve İnsan Kaynakları Planı
+        html += `<div class="report-section"><h2>10. Organizasyon ve İnsan Kaynakları Planı</h2>`;
         html += `<div class="report-question"><div class="q">3.1. Ortaklık yapısı</div><div class="a">${c.q3_1 || '-'}</div></div>`;
         html += `<div class="report-question"><div class="q">3.2. 30 kişilik ekip nitelikleri</div><div class="a">${c.q3_2 || '-'}</div></div>`;
         html += `<div class="report-question"><div class="q">3.3. İşe alım planı</div><div class="a">${c.q3_3 || '-'}</div></div>`;
-        html += `<div class="report-question"><div class="q">3.4. Yönetim kadrosu</div><div class="a">${c.q3_4 || '-'}</div></div></div>`;
+        html += `<div class="report-question"><div class="q">3.4. Yönetim kadrosu</div><div class="a">${c.q3_4 || '-'}</div></div>`;
+        html += `</div>`;
 
-        // 5. Faaliyet Bölgeleri
-        html += `<div class="report-section"><h2>5. Faaliyet Bölgeleri</h2>`;
+        // 11. Faaliyet Bölgeleri
+        html += `<div class="report-section"><h2>11. Faaliyet Bölgeleri</h2>`;
         html += `<div class="report-question"><div class="q">4.1. Seçilen bölgeler</div><div class="a">${regions.join(', ')}</div></div>`;
         html += `<div class="report-question"><div class="q">4.2. Fiziki ofis planı</div><div class="a">${c.q4_2 || '-'}</div></div>`;
-        html += `<div class="report-question"><div class="q">4.3. Bölgesel sektör odakları</div><div class="a">${c.q4_3 || '-'}</div></div></div>`;
+        html += `<div class="report-question"><div class="q">4.3. Bölgesel sektör odakları</div><div class="a">${c.q4_3 || '-'}</div></div>`;
+        html += `</div>`;
 
-        // 6. İş Planı & Finans
-        html += `<div class="report-section"><h2>6. İş Planı ve Finans</h2>`;
+        // 12. İş Planı & Finans
+        html += `<div class="report-section"><h2>12. İş Planı ve Finans</h2>`;
         html += `<div class="report-question"><div class="q">5.1. Yıllık bütçe tahmini</div><div class="a">${c.q5_1 || '-'}</div></div>`;
         html += `<div class="report-question"><div class="q">5.2. Gelir modeli</div><div class="a">${c.q5_2 || '-'}</div></div>`;
         html += `<div class="report-question"><div class="q">5.3. Yıllık hedef KOBİ sayısı</div><div class="a">${c.q5_3 || '-'}</div></div>`;
-        html += `<div class="report-question"><div class="q">5.4. Sürdürülebilirlik planı</div><div class="a">${c.q5_4 || '-'}</div></div></div>`;
+        html += `<div class="report-question"><div class="q">5.4. Sürdürülebilirlik planı</div><div class="a">${c.q5_4 || '-'}</div></div>`;
+        html += `</div>`;
 
-        // 7. Kurumsal Deneyim
-        html += `<div class="report-section"><h2>7. Kurumsal Deneyim</h2>`;
+        // 13. Kurumsal Deneyim
+        html += `<div class="report-section"><h2>13. Kurumsal Deneyim</h2>`;
         html += `<div class="report-question"><div class="q">6.1. Daha önce KOBİ projesi yürütüldü mü?</div><div class="a">${c.q6_1 || '-'}</div></div>`;
         html += `<div class="report-question"><div class="q">6.2. İşbirliği imkanları</div><div class="a">${c.q6_2 || '-'}</div></div>`;
-        html += `<div class="report-question"><div class="q">6.3. Daha önce alınan destekler</div><div class="a">${c.q6_3 || '-'}</div></div></div>`;
+        html += `<div class="report-question"><div class="q">6.3. Daha önce alınan destekler</div><div class="a">${c.q6_3 || '-'}</div></div>`;
+        html += `</div>`;
 
-        // 8. Ek Materyaller
-        html += `<div class="report-section"><h2>8. Ek Materyaller (İsteğe Bağlı)</h2>`;
+        // 14. Ek Materyaller
+        html += `<div class="report-section"><h2>14. Ek Materyaller (İsteğe Bağlı)</h2>`;
         html += `<div class="report-question"><div class="q">7.1. Yazılım mock-up / ekran görüntüsü</div><div class="a">${c.q7_1 || '-'}</div></div>`;
         html += `<div class="report-question"><div class="q">7.2. Proje akış şeması</div><div class="a">${c.q7_2 || '-'}</div></div>`;
-        html += `<div class="report-question"><div class="q">7.3. Referans projeler</div><div class="a">${c.q7_3 || '-'}</div></div></div>`;
+        html += `<div class="report-question"><div class="q">7.3. Referans projeler</div><div class="a">${c.q7_3 || '-'}</div></div>`;
+        html += `</div>`;
 
         html += `</div>`;
         return html;
     }
 
-    // ========== ADMIN PANELİ İŞLEMLERİ ==========
+    // ========== ADMIN PANELİ İŞLEMLERİ (Aynı, renderCRM artık yeni alanları da içerir) ==========
     function renderCRM() {
         const subs = getSubmissions();
         let html = `<table class="admin-table">
             <thead> <th class="checkbox-col"><input type="checkbox" id="selectAllCheckbox"></th><th>ID</th><th>Tarih</th><th>Ad Soyad</th><th>E-posta</th><th>Firma</th><th>İşlem</th> </thead><tbody>`;
         subs.forEach(s => {
-            html += ` <td class="checkbox-col"><input type="checkbox" class="rowCheckbox" value="${s.id}">  </td>
-                   <td>${s.id}</td>
-                   <td>${s.tarih}</td>
-                   <td>${s.adSoyad || '-'}</td>
-                   <td>${s.email || '-'}</td>
-                   <td>${s.firma || '-'}</td>
-                   <td><button class="btn-sm" onclick="viewDetail(${s.id})">Detaylı Rapor</button> <button class="btn-sm btn-danger" onclick="deleteSubmission(${s.id})">Sil</button></td>
-                 </tr>`;
+            html += ` <td class="checkbox-col"><input type="checkbox" class="rowCheckbox" value="${s.id}">   </td>
+                    <td>${s.id}</td>
+                    <td>${s.tarih}</td>
+                    <td>${s.adSoyad || '-'}</td>
+                    <td>${s.email || '-'}</td>
+                    <td>${s.firma || '-'}</td>
+                    <td><button class="btn-sm" onclick="viewDetail(${s.id})">Detaylı Rapor</button> <button class="btn-sm btn-danger" onclick="deleteSubmission(${s.id})">Sil</button></td>
+                  </tr>`;
         });
         html += `</tbody></table>`;
         document.getElementById('crmList').innerHTML = html;
-        // Select all checkbox
         const selectAllCheckbox = document.getElementById('selectAllCheckbox');
         if (selectAllCheckbox) {
             selectAllCheckbox.addEventListener('change', function(e) {
@@ -470,13 +608,11 @@
         }
     }
 
-    // Seçili ID'leri al
     function getSelectedIds() {
         const checkboxes = document.querySelectorAll('.rowCheckbox:checked');
         return Array.from(checkboxes).map(cb => parseInt(cb.value));
     }
 
-    // Seçilenleri sil
     function deleteSelected() {
         const selectedIds = getSelectedIds();
         if (selectedIds.length === 0) {
@@ -490,7 +626,6 @@
         }
     }
 
-    // Seçilenleri Word olarak indir (rapor formatında)
     function exportSelectedToWord() {
         const selectedIds = getSelectedIds();
         if (selectedIds.length === 0) {
@@ -512,7 +647,6 @@
         URL.revokeObjectURL(link.href);
     }
 
-    // Tümünü Word olarak indir
     function exportAllToWord() {
         const subs = getSubmissions();
         if (subs.length === 0) {
@@ -533,7 +667,6 @@
         URL.revokeObjectURL(link.href);
     }
 
-    // Tümünü seç / seçimi kaldır
     function selectAll() {
         document.querySelectorAll('.rowCheckbox').forEach(cb => cb.checked = true);
         const selectAllCheckbox = document.getElementById('selectAllCheckbox');
@@ -545,7 +678,6 @@
         if (selectAllCheckbox) selectAllCheckbox.checked = false;
     }
 
-    // Detay modal
     window.viewDetail = function(id) {
         const subs = getSubmissions();
         const sub = subs.find(s => s.id === id);
@@ -553,12 +685,10 @@
         const reportHtml = buildFormattedReport(sub);
         document.getElementById('modalBody').innerHTML = reportHtml;
         document.getElementById('detailModal').classList.add('show');
-        // butonları bağla
         const printBtn = document.getElementById('printReportBtn');
         const newPrint = printBtn.cloneNode(true);
         printBtn.parentNode.replaceChild(newPrint, printBtn);
         newPrint.onclick = () => window.print();
-
         const wordBtn = document.getElementById('exportReportWord');
         const newWord = wordBtn.cloneNode(true);
         wordBtn.parentNode.replaceChild(newWord, wordBtn);
@@ -623,7 +753,6 @@
         saveAdminConfig(updated);
         document.getElementById('settingsError').style.display = 'none';
         document.getElementById('settingsSuccess').style.display = 'block';
-        // Temizle
         document.getElementById('currentPassword').value = '';
         document.getElementById('newUsername').value = '';
         document.getElementById('newPassword').value = '';
